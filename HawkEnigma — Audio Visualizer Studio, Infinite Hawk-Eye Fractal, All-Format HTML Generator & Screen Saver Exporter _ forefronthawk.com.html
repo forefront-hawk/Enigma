@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-ov="ui-sophisticated">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>HawkEnigma — Audio Visualizer Studio, Infinite Hawk-Eye Fractal, All-Format HTML Generator &amp; Screen Saver Exporter | forefronthawk.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700;800&family=Orbitron:wght@600;800;900&family=Press+Start+2P&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"></script>
+<style>
+:root{
+--bg:#090B10;--panel:#121620;--line:#2A3040;--text:#F8FAFC;--mute:#94A3B8;--plate:#181D2A;--accent:#D4AF37;
+--deck1:#161B26;--deck2:#0C0F17;--deck-border:#C5A059;--plate-border:#384152;
+--font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+--mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark
+}
+@media(prefers-color-scheme:light){:root[data-theme="auto"]{--bg:#E8EBF0;--panel:#F8FAFC;--line:#CBD5E1;--text:#0F172A;--mute:#475569;--plate:#8B93A3;--deck1:#CBD5E1;--deck2:#94A3B8;--deck-border:#64748B;color-scheme:light}}
+:root[data-theme="dark"]{--bg:#07090E;--panel:#12141A;--line:#262A34;--text:#F1F5F9;--mute:#94A3B8;--plate:#4B505C;--deck1:#1A1C23;--deck2:#101216;--deck-border:#2D323E}
+:root[data-theme="light"]{--bg:#E8EBF0;--panel:#F8FAFC;--line:#CBD5E1;--text:#0F172A;--mute:#475569;--plate:#8B93A3;--deck1:#CBD5E1;--deck2:#94A3B8;--deck-border:#64748B;color-scheme:light}
+:root[data-theme="matrix"]{--bg:#010902;--panel:#031606;--line:#00FF41;--text:#00FF41;--mute:#15803D;--plate:#042409;--accent:#00FF41;--deck1:#031A07;--deck2:#010802;--deck-border:#00FF41}
+:root[data-theme="midnight"]{--bg:#020617;--panel:#0F172A;--line:#1E293B;--text:#E2E8F0;--mute:#64748B;--plate:#1E293B;--deck1:#0F172A;--deck2:#020617;--deck-border:#334155}
+:root[data-theme="cyberpunk"]{--bg:#0D0221;--panel:#19053B;--line:#4C1D95;--text:#F0ABFC;--mute:#C084FC;--plate:#2E1065;--deck1:#240046;--deck2:#10002B;--deck-border:#7E22CE}
+:root[data-theme="emerald"]{--bg:#021612;--panel:#062821;--line:#0F4C3E;--text:#D1FAE5;--mute:#6EE7B7;--plate:#114237;--deck1:#06342B;--deck2:#021B16;--deck-border:#059669}
+:root[data-theme="crimson"]{--bg:#160408;--panel:#280911;--line:#501322;--text:#FFE4E6;--mute:#FDA4AF;--plate:#3F101C;--deck1:#310B15;--deck2:#190409;--deck-border:#BE123C}
+:root[data-theme="nord"]{--bg:#2E3440;--panel:#3B4252;--line:#4C566A;--text:#ECEFF4;--mute:#D8DEE9;--plate:#434C5E;--deck1:#3B4252;--deck2:#2E3440;--deck-border:#4C566A}
+:root[data-theme="solarlight"]{--bg:#FDF6E3;--panel:#EEE8D5;--line:#D3CBB7;--text:#073642;--mute:#586E75;--plate:#93A1A1;--deck1:#E1DBCA;--deck2:#D3CBB7;--deck-border:#93A1A1;color-scheme:light}
+:root[data-theme="solardark"]{--bg:#002B36;--panel:#073642;--line:#2AA198;--text:#93A1A1;--mute:#657B83;--plate:#0A4452;--deck1:#073642;--deck2:#00212B;--deck-border:#586E75}
+:root[data-theme="mocha"]{--bg:#1E1E2E;--panel:#181825;--line:#313244;--text:#CDD6F4;--mute:#A6ADC8;--plate:#45475A;--deck1:#26273B;--deck2:#11111B;--deck-border:#585B70}
+:root[data-theme="contrast"]{--bg:#000000;--panel:#0A0A0A;--line:#FFFFFF;--text:#FFFFFF;--mute:#E2E8F0;--plate:#1F1F1F;--deck1:#0A0A0A;--deck2:#000000;--deck-border:#FFFFFF}
+/* Core Overlays (Sophisticated ForefrontHawk Default, Tech, Futuristic, Classic & 20 Hardware/OS Skins) */
+[data-ov="ui-sophisticated"]{--bg:#090B10;--panel:#121620;--line:#2A3040;--text:#F8FAFC;--mute:#94A3B8;--plate:#181D2A;--accent:#D4AF37;--deck1:#161B26;--deck2:#0C0F17;--deck-border:#C5A059}
+[data-ov="ui-sophisticated"] .bar{background:linear-gradient(180deg,rgba(22,27,38,0.96),rgba(14,17,24,0.98))!important;border:1px solid rgba(212,175,55,0.35)!important}
+[data-ov="ui-sophisticated"] .deck{border:2px solid #C5A059!important;box-shadow:0 18px 45px rgba(0,0,0,0.85)!important}
+[data-ov="ui-tech"]{--bg:#040B14;--panel:#071524;--line:#0EA5E9;--text:#E0F2FE;--mute:#38BDF8;--plate:#081C30;--accent:#00F5D4;--deck1:#07192B;--deck2:#030C16;--deck-border:#0EA5E9;--font:"JetBrains Mono",monospace}
+[data-ov="ui-tech"] .bar,[data-ov="ui-tech"] .deck{border-radius:3px!important;border-color:#0EA5E9!important}
+[data-ov="ui-futuristic"]{--bg:#060414;--panel:#110B29;--line:#8B5CF6;--text:#F3E8FF;--mute:#C4B5FD;--plate:#170F36;--accent:#00F0FF;--deck1:#19103B;--deck2:#09051A;--deck-border:#00F0FF}
+[data-ov="ui-futuristic"] .bar,[data-ov="ui-futuristic"] .deck{border-radius:18px!important;border-color:#00F0FF!important;box-shadow:0 0 24px rgba(139,92,246,0.3)!important}
+[data-ov="os-win95"] .bar,[data-ov="os-win95"] .deck{background:#C0C0C0!important;color:#000!important;border:2px outset #FFF!important;border-radius:0!important}
+[data-ov="os-winxp"] .bar,[data-ov="os-winxp"] .deck{background:linear-gradient(180deg,#245EDB,#1941A5)!important;color:#FFF!important;border:2px solid #003399!important}
+[data-ov="os-pipboy"] .bar,[data-ov="os-pipboy"] .deck{background:#051405!important;color:#1AFF40!important;border:2px solid #1AFF40!important}
+[data-ov="app-winamp"] .bar,[data-ov="app-winamp"] .deck{background:#292938!important;color:#00FF00!important;border:2px ridge #6E738B!important;border-radius:0!important}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--text);font:500 13px/1.4 var(--font);min-height:100vh;overflow-x:hidden;transition:background-color .18s,color .18s}
+.wrap{max-width:1240px;margin:0 auto;padding:8px 10px;display:flex;flex-direction:column;gap:8px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:7px 10px}
+button,select,input{font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:4px 8px;min-height:32px;cursor:pointer}
+button:hover{filter:brightness(1.14)}
+input[type=range]{padding:0;border:0;background:none;accent-color:var(--accent);min-height:auto}
+input[type=color]{padding:1px;width:36px;height:30px;min-height:30px}
+.brand{font-weight:800;font-size:15.5px;display:flex;align-items:center;gap:6px}.brand i{font-style:normal;color:var(--accent)}
+.chip{font:600 11px var(--mono);padding:3px 8px;border-radius:7px;border:1px solid var(--line);color:var(--mute)}
+.seg{display:flex;flex-wrap:wrap;gap:2px;border:1px solid var(--line);border-radius:10px;padding:2px}
+.seg button,.seg a.nav-pill{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:0;min-height:26px;padding:2px 9px;background:none;color:var(--mute);font-weight:700;font-size:11.5px;border-radius:7px;cursor:pointer}
+.seg button[aria-current="page"],.seg a.nav-pill[aria-current="page"]{background:var(--accent);color:#04121C}
+.deck{display:flex;flex-direction:column;gap:10px;background:linear-gradient(145deg,var(--deck1),var(--deck2));border:2px solid var(--deck-border);border-radius:18px;padding:12px}
+.subcard{background:rgba(0,0,0,0.2);border:1px solid var(--line);border-radius:10px;padding:7px 9px;width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:7px}
+.subhead{font:800 10.5px var(--mono);text-transform:uppercase;color:var(--accent);letter-spacing:0.5px;margin-right:4px}
+.swatch-pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:8px;border:2px solid #fff;font:800 12px var(--mono);box-shadow:0 0 12px var(--active-c,#10B981)}
+
+
+/* === COMPLETE 13 UI THEMES (Always override default palette variables cleanly) === */
+:root[data-theme="dark"]{--bg:#07090E!important;--panel:#12141A!important;--line:#262A34!important;--text:#F1F5F9!important;--mute:#94A3B8!important;--plate:#181D2A!important;--deck1:#161B26!important;--deck2:#0C0F17!important;--deck-border:#C5A059!important;color-scheme:dark}
+:root[data-theme="light"]{--bg:#E8EBF0!important;--panel:#F8FAFC!important;--line:#CBD5E1!important;--text:#0F172A!important;--mute:#475569!important;--plate:#CBD5E1!important;--deck1:#F1F5F9!important;--deck2:#E2E8F0!important;--deck-border:#64748B!important;color-scheme:light}
+:root[data-theme="matrix"]{--bg:#010902!important;--panel:#031606!important;--line:#00FF41!important;--text:#00FF41!important;--mute:#22C55E!important;--plate:#042409!important;--accent:#00FF41!important;--deck1:#031A07!important;--deck2:#010802!important;--deck-border:#00FF41!important}
+:root[data-theme="midnight"]{--bg:#020617!important;--panel:#0F172A!important;--line:#1E293B!important;--text:#E2E8F0!important;--mute:#64748B!important;--plate:#1E293B!important;--deck1:#0F172A!important;--deck2:#020617!important;--deck-border:#38BDF8!important}
+:root[data-theme="cyberpunk"]{--bg:#0D0221!important;--panel:#19053B!important;--line:#FF007F!important;--text:#F0ABFC!important;--mute:#C084FC!important;--plate:#2E1065!important;--accent:#00F0FF!important;--deck1:#240046!important;--deck2:#10002B!important;--deck-border:#FF007F!important}
+:root[data-theme="emerald"]{--bg:#021612!important;--panel:#062821!important;--line:#10B981!important;--text:#D1FAE5!important;--mute:#6EE7B7!important;--plate:#114237!important;--accent:#34D399!important;--deck1:#06342B!important;--deck2:#021B16!important;--deck-border:#10B981!important}
+:root[data-theme="crimson"]{--bg:#160408!important;--panel:#280911!important;--line:#F43F5E!important;--text:#FFE4E6!important;--mute:#FDA4AF!important;--plate:#3F101C!important;--accent:#FB7185!important;--deck1:#310B15!important;--deck2:#190409!important;--deck-border:#E11D48!important}
+:root[data-theme="nord"]{--bg:#2E3440!important;--panel:#3B4252!important;--line:#4C566A!important;--text:#ECEFF4!important;--mute:#D8DEE9!important;--plate:#434C5E!important;--accent:#88C0D0!important;--deck1:#3B4252!important;--deck2:#2E3440!important;--deck-border:#81A1C1!important}
+:root[data-theme="solarlight"]{--bg:#FDF6E3!important;--panel:#EEE8D5!important;--line:#D3CBB7!important;--text:#073642!important;--mute:#586E75!important;--plate:#D3CBB7!important;--accent:#B58900!important;--deck1:#EEE8D5!important;--deck2:#FDF6E3!important;--deck-border:#93A1A1!important;color-scheme:light}
+:root[data-theme="solardark"]{--bg:#002B36!important;--panel:#073642!important;--line:#2AA198!important;--text:#EEE8D5!important;--mute:#93A1A1!important;--plate:#0A4452!important;--accent:#2AA198!important;--deck1:#073642!important;--deck2:#00212B!important;--deck-border:#2AA198!important}
+:root[data-theme="mocha"]{--bg:#1E1E2E!important;--panel:#181825!important;--line:#45475A!important;--text:#CDD6F4!important;--mute:#A6ADC8!important;--plate:#313244!important;--accent:#CBA6F7!important;--deck1:#26273B!important;--deck2:#11111B!important;--deck-border:#CBA6F7!important}
+:root[data-theme="contrast"]{--bg:#000000!important;--panel:#0A0A0A!important;--line:#FFFFFF!important;--text:#FFFFFF!important;--mute:#FACC15!important;--plate:#1F1F1F!important;--accent:#FACC15!important;--deck1:#0A0A0A!important;--deck2:#000000!important;--deck-border:#FFFFFF!important}
+
+/* === COMPLETE 23 UI OVERLAYS (Sophisticated, Tech, Futuristic + 20 Hardware/OS Skins) === */
+[data-ov="ui-sophisticated"] .bar{background:linear-gradient(180deg,color-mix(in srgb,var(--panel) 95%,#D4AF37),var(--panel))!important;border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line))!important}
+[data-ov="ui-sophisticated"] .deck{border:2px solid var(--deck-border)!important;box-shadow:0 16px 40px rgba(0,0,0,0.55)!important}
+[data-ov="ui-tech"]{--font:"JetBrains Mono",monospace}
+[data-ov="ui-tech"] .bar,[data-ov="ui-tech"] .deck{border-radius:3px!important;border:1.5px solid #0EA5E9!important;box-shadow:inset 0 0 12px rgba(14,165,233,0.18)!important}
+[data-ov="ui-futuristic"] .bar,[data-ov="ui-futuristic"] .deck{border-radius:18px!important;border:1.5px solid #00F0FF!important;box-shadow:0 0 24px rgba(139,92,246,0.3)!important}
+[data-ov="mech-ibm"] .bar,[data-ov="mech-ibm"] .deck{background:#D6D2C4!important;color:#111!important;border:3px outset #F5F2E8!important;border-radius:4px!important}
+[data-ov="mech-ibm"] button,[data-ov="mech-ibm"] select{background:#EAE6D9!important;color:#111!important;border:2px outset #FFF!important;border-radius:3px!important}
+[data-ov="mech-c64"] .bar,[data-ov="mech-c64"] .deck{background:#96897B!important;color:#F5F0EB!important;border:3px solid #42382F!important;border-radius:8px!important}
+[data-ov="mech-cyber"] .bar,[data-ov="mech-cyber"] .deck{background:rgba(16,4,36,0.92)!important;color:#00F0FF!important;border:2px solid #FF007F!important;box-shadow:0 0 20px rgba(255,0,127,0.35)!important}
+[data-ov="mech-typewriter"] .bar,[data-ov="mech-typewriter"] .deck{background:#1C1612!important;color:#F5E6C8!important;border:3px double #D4AF37!important;border-radius:12px!important}
+[data-ov="mech-arcade"] .bar,[data-ov="mech-arcade"] .deck{background:#141829!important;color:#FACC15!important;border:3px solid #EF4444!important;border-radius:14px!important}
+[data-ov="plug-vst"] .bar,[data-ov="plug-vst"] .deck{background:linear-gradient(180deg,#2C3038,#1E2127)!important;color:#E2E8F0!important;border:2px solid #475569!important;border-radius:6px!important}
+[data-ov="plug-eurorack"] .bar,[data-ov="plug-eurorack"] .deck{background:#D4D4D8!important;color:#18181B!important;border:3px solid #52525B!important;border-radius:2px!important}
+[data-ov="plug-mpc"] .bar,[data-ov="plug-mpc"] .deck{background:#DCD7C9!important;color:#1F2937!important;border:4px solid #374151!important;border-radius:6px!important}
+[data-ov="plug-dmx"] .bar,[data-ov="plug-dmx"] .deck{background:#111318!important;color:#FBBF24!important;border:2px solid #F59E0B!important;border-radius:4px!important}
+[data-ov="plug-davinci"] .bar,[data-ov="plug-davinci"] .deck{background:#16161A!important;color:#E4E4E7!important;border:1px solid #3F3F46!important;border-radius:8px!important}
+[data-ov="app-winamp"] .bar,[data-ov="app-winamp"] .deck{background:#292938!important;color:#00FF00!important;border:2px ridge #6E738B!important;border-radius:0!important}
+[data-ov="app-ps3"] .bar,[data-ov="app-ps3"] .deck{background:#D4D0C8!important;color:#000!important;border:2px outset #FFF!important;border-radius:0!important}
+[data-ov="app-lotus"] .bar,[data-ov="app-lotus"] .deck{background:#000080!important;color:#FFFF00!important;border:2px double #00FFFF!important;border-radius:0!important}
+[data-ov="app-soundforge"] .bar,[data-ov="app-soundforge"] .deck{background:#1A2226!important;color:#00FF66!important;border:2px solid #00AA44!important;border-radius:2px!important}
+[data-ov="app-hypercard"] .bar,[data-ov="app-hypercard"] .deck{background:#FFFFFF!important;color:#000000!important;border:2px solid #000000!important;border-radius:0!important;box-shadow:4px 4px 0 #000!important}
+[data-ov="os-win95"] .bar,[data-ov="os-win95"] .deck{background:#C0C0C0!important;color:#000!important;border:2px outset #FFF!important;border-radius:0!important}
+[data-ov="os-win95"] button,[data-ov="os-win95"] select{background:#C0C0C0!important;color:#000!important;border:2px outset #FFF!important;border-radius:0!important}
+[data-ov="os-winxp"] .bar,[data-ov="os-winxp"] .deck{background:linear-gradient(180deg,#245EDB,#1941A5)!important;color:#FFF!important;border:2px solid #003399!important;border-radius:8px!important}
+[data-ov="os-mac9"] .bar,[data-ov="os-mac9"] .deck{background:#DDDDDD!important;color:#000!important;border:2px outset #FFF!important;border-radius:6px!important}
+[data-ov="os-amiga"] .bar,[data-ov="os-amiga"] .deck{background:#0055AA!important;color:#FFFFFF!important;border:2px solid #FF8800!important;border-radius:0!important}
+[data-ov="os-pipboy"] .bar,[data-ov="os-pipboy"] .deck{background:#051405!important;color:#1AFF40!important;border:2px solid #1AFF40!important;border-radius:6px!important}
+
+
+/* === HAWKFLIES OPTICAL FILTERS & FULL-SCREEN ALTITUDE / FILTER HUD === */
+#aerialViewport {
+  position: relative;
+  overflow: hidden;
+}
+#flightCanvas {
+  transition: filter 0.22s ease;
+}
+#aerialViewport[data-fx="uav"] #flightCanvas {
+  filter: grayscale(100%) contrast(155%) brightness(92%);
+}
+#aerialViewport[data-fx="pipboy"] #flightCanvas {
+  filter: grayscale(100%) sepia(100%) hue-rotate(72deg) saturate(420%) contrast(145%) brightness(88%);
+}
+#aerialViewport[data-fx="inverted"] #flightCanvas {
+  filter: invert(100%) hue-rotate(180deg) contrast(125%);
+}
+#aerialViewport[data-fx="flir_white"] #flightCanvas {
+  filter: grayscale(100%) invert(100%) contrast(175%) brightness(108%);
+}
+#aerialViewport[data-fx="nvg"] #flightCanvas {
+  filter: grayscale(100%) sepia(100%) hue-rotate(82deg) saturate(350%) contrast(135%) brightness(95%);
+}
+#aerialViewport[data-fx="cyber"] #flightCanvas {
+  filter: saturate(240%) hue-rotate(255deg) contrast(135%);
+}
+#aerialViewport[data-fx="amber_hud"] #flightCanvas {
+  filter: grayscale(100%) sepia(100%) hue-rotate(5deg) saturate(420%) contrast(140%);
+}
+
+/* Scanline & Vignette Overlay for UAV / Pip-Boy / NVG */
+.fx-screen-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+#aerialViewport[data-fx="pipboy"] .fx-screen-overlay {
+  opacity: 1;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 255, 65, 0.11) 0px, rgba(0, 255, 65, 0.11) 1px, transparent 1px, transparent 3px),
+    radial-gradient(circle at 50% 50%, transparent 55%, rgba(0, 20, 4, 0.78) 100%);
+  box-shadow: inset 0 0 48px rgba(26, 255, 64, 0.35);
+}
+#aerialViewport[data-fx="uav"] .fx-screen-overlay {
+  opacity: 1;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0px, rgba(255, 255, 255, 0.04) 1px, transparent 1px, transparent 4px),
+    radial-gradient(circle at 50% 50%, transparent 60%, rgba(0, 0, 0, 0.75) 100%);
+}
+#aerialViewport[data-fx="nvg"] .fx-screen-overlay {
+  opacity: 1;
+  background: radial-gradient(circle at 50% 50%, transparent 45%, rgba(0, 15, 0, 0.92) 96%);
+  box-shadow: inset 0 0 70px #000;
+}
+
+/* Full-Screen & On-Viewport Interactive Altitude & Filter Control Bar */
+.hud-fs-control-dock {
+  position: absolute;
+  left: 12px;
+  right: 200px;
+  bottom: 62px;
+  z-index: 6;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: rgba(6, 10, 18, 0.84);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  border-radius: 11px;
+  padding: 6px 10px;
+  font: 700 11px var(--mono);
+}
+@media (max-width: 780px) {
+  .hud-fs-control-dock {
+    right: 12px;
+    bottom: 68px;
+  }
+}
+
+/* Quick-Pick Landmark Pill Grid */
+.lm-quick-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.lm-chip-btn {
+  padding: 4px 8px;
+  border-radius: 7px;
+  font: 700 10.5px var(--mono);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--line);
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.lm-chip-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(212,175,55,0.12);
+}
+
+</style>
+<style>
+*:focus-visible {
+  outline: 3px solid var(--accent, #D4AF37) !important;
+  outline-offset: 2px !important;
+}
+.enigma-hero {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, #090D1E 0%, #020308 88%);
+  border: 2px solid var(--deck-border, #C5A059);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 22px 60px rgba(0,0,0,0.92);
+}
+#enigmaStage {
+  position: relative;
+  width: 100%;
+  height: clamp(420px, 64dvh, 720px);
+  overflow: hidden;
+  background: #02040A;
+}
+.viz-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.viz-layer[hidden] {
+  display: none !important;
+}
+#asciiVizLayer {
+  margin: 0;
+  padding: 8px;
+  font: 800 9.5px/9.5px "JetBrains Mono", monospace;
+  color: #00F5D4;
+  background: #020409;
+  overflow: hidden;
+  white-space: pre;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+#css3dVizLayer {
+  perspective: 900px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 50%, #0B132B 0%, #020409 85%);
+  overflow: hidden;
+}
+.css3d-scene {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  transform-style: preserve-3d;
+}
+.css3d-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid var(--accent, #D4AF37);
+  box-shadow: 0 0 24px var(--accent, #D4AF37), inset 0 0 18px rgba(0,245,212,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+/* Top & Bottom Stage Overlays */
+.enigma-hud-top {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 12;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+  pointer-events: none;
+}
+.enigma-hud-bottom {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 12;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+  pointer-events: none;
+}
+.e-pill {
+  pointer-events: auto;
+  background: rgba(5, 9, 18, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.48);
+  border-radius: 10px;
+  padding: 6px 11px;
+  font: 700 11.5px var(--mono);
+  color: #F8FAFC;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Screen Saver Clock & Ambient Overlay */
+#screensaverHudOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 8;
+  pointer-events: none;
+  text-align: center;
+  text-shadow: 0 4px 28px rgba(0,0,0,0.95);
+}
+.ss-clock {
+  font: 900 clamp(32px, 5vw, 68px) "Orbitron", var(--mono);
+  color: rgba(255,255,255,0.88);
+  letter-spacing: 0.08em;
+}
+.ss-sub {
+  font: 700 12px var(--mono);
+  color: var(--accent, #D4AF37);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Template Grid */
+.tpl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 7px;
+}
+.tpl-card {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: rgba(12, 16, 26, 0.88);
+  color: var(--text);
+  font: 800 11.5px var(--font);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  text-align: left;
+  transition: all 0.14s;
+}
+.tpl-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+.tpl-card[aria-pressed="true"] {
+  background: linear-gradient(135deg, rgba(212,175,55,0.22), rgba(6,182,212,0.18));
+  border-color: var(--accent);
+  box-shadow: 0 0 18px rgba(212,175,55,0.3);
+}
+
+/* Two-Column Control Layout */
+.enigma-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 980px) {
+  .enigma-grid { grid-template-columns: 1fr; }
+}
+
+/* Full-Screen Screen Saver Mode */
+body.enigma-fs header,
+body.enigma-fs #sharedCustPanel,
+body.enigma-fs .enigma-controls-area,
+body.enigma-fs .hide-in-fs {
+  display: none !important;
+}
+body.enigma-fs .wrap {
+  max-width: 100vw !important;
+  width: 100vw !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+body.enigma-fs .enigma-hero {
+  border: none !important;
+  border-radius: 0 !important;
+}
+body.enigma-fs #enigmaStage {
+  height: 100dvh !important;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- SHARED FOREFRONTHAWK.COM TOP SUBDOMAIN BANNER -->
+  <header class="bar" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+      <a href="https://forefronthawk.com" class="brand" style="text-decoration:none;color:var(--text)">🦅 Forefront<i>Hawk</i></a>
+      <span class="chip" style="border-color:#F43F5E;color:#FB7185;font-weight:800">🌀 HawkEnigma • Audio Visualizer &amp; Screen Saver Studio</span>
+      <nav class="seg" id="suiteNavSeg" aria-label="ForefrontHawk Subdomain Navigation">
+        <a href="https://forefronthawk.com" data-sub="https://forefronthawk.com" class="sub-link nav-pill">🏠 HawkSuite</a>
+        <a href="https://chroma.forefronthawk.com" data-sub="https://chroma.forefronthawk.com" class="sub-link nav-pill">🎹 Chroma</a>
+        <a href="https://draw.forefronthawk.com" data-sub="https://draw.forefronthawk.com" class="sub-link nav-pill">💡 HawkDraw</a>
+        <a href="https://shine.forefronthawk.com" data-sub="https://shine.forefronthawk.com" class="sub-link nav-pill">⚡ HawkShine</a>
+        <a href="https://rgb.forefronthawk.com" data-sub="https://rgb.forefronthawk.com" class="sub-link nav-pill">🎞️ HawkRGB</a>
+        <a href="https://calls.forefronthawk.com" data-sub="https://calls.forefronthawk.com" class="sub-link nav-pill">🎙️ HawkCalls</a>
+        <a href="https://studio.forefronthawk.com" data-sub="https://studio.forefronthawk.com" class="sub-link nav-pill">🎛️ HawkStudio</a>
+        <a href="https://flies.forefronthawk.com" data-sub="https://flies.forefronthawk.com" class="sub-link nav-pill">🦅 HawkFlies</a>
+        <a href="https://globe.forefronthawk.com" data-sub="https://globe.forefronthawk.com" class="sub-link nav-pill">🌍 HawkGlobe</a>
+        <a href="https://deck.forefronthawk.com" data-sub="https://deck.forefronthawk.com" class="sub-link nav-pill">🎚️ HawkDeck</a>
+        <a href="https://enigma.forefronthawk.com" data-sub="https://enigma.forefronthawk.com" class="sub-link nav-pill" aria-current="page">🌀 HawkEnigma</a>
+      </nav>
+    </div>
+    <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+      <span id="chromaLiveSwatch" class="swatch-pill" style="background:#D4AF37;color:#080B10">#D4AF37 (GOLD)</span>
+      <input id="mobilePasteColorIn" type="text" placeholder="Paste #HEX" value="#D4AF37" style="width:88px;font:700 11.5px var(--mono);text-align:center">
+      <button id="pasteFromClipBtn" type="button" class="chip" style="cursor:pointer;border-color:var(--accent);color:var(--accent);font-weight:700">📋 Paste Color</button>
+      <button id="openChromaPopupBtn" type="button" class="chip" style="cursor:pointer">🪟 Pair Chroma</button>
+      <button id="toggleSharedCustBtn" type="button">🛠️ UI &amp; Skin</button>
+    </div>
+  </header>
+
+  <section id="sharedCustPanel" class="bar" hidden>
+    <div class="subcard">
+      <span class="subhead">Shared forefronthawk.com UI (Travels Across All Sites)</span>
+      <label>🎛️ Overlay <select id="sharedOverlaySel"></select></label>
+      <label>UI Theme
+        <select id="sharedThemeSel">
+          <option value="dark">Obsidian Dark</option>
+          <option value="light">Studio Daylight</option>
+          <option value="matrix">Matrix Digital Code</option>
+          <option value="midnight">Midnight OLED</option>
+          <option value="cyberpunk">Cyberpunk Neon</option>
+          <option value="emerald">Emerald Matrix</option>
+          <option value="crimson">Crimson Forged</option>
+          <option value="nord">Nordic Frost</option>
+          <option value="solarlight">Solarized Light</option>
+          <option value="solardark">Solarized Dark</option>
+          <option value="mocha">Catppuccin Mocha</option>
+          <option value="contrast">High-Contrast Pro</option>
+          <option value="custom_live">★ Custom Colors</option>
+        </select>
+      </label>
+      <label>Font
+        <select id="sharedFontSel">
+          <option value="system">System Sans</option>
+          <option value="calibri">Calibri</option>
+          <option value="arial">Arial</option>
+          <option value="inter">Inter Studio</option>
+          <option value="serif">Serif</option>
+          <option value="mono">JetBrains Mono</option>
+          <option value="space">Space Grotesk</option>
+          <option value="orbitron">Orbitron Cyber</option>
+          <option value="pixel">8-Bit Pixel</option>
+        </select>
+      </label>
+      <label>BG <input type="color" id="cBgIn" value="#090B10"></label>
+      <label>Panel <input type="color" id="cPanelIn" value="#121620"></label>
+      <label>Text <input type="color" id="cTextIn" value="#F8FAFC"></label>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- MULTI-FORMAT LIVE AUDIO VISUALIZER & RECURSIVE HAWK-EYE STAGE         -->
+  <!-- ===================================================================== -->
+  <section class="enigma-hero" aria-label="HawkEnigma Multi-Format Audio Visualizer Stage">
+    <div id="enigmaStage">
+      <!-- Format 1: HTML5 2D Canvas Layer (Default — Infinite Hawk-Eye Droste Zoom & 2D Fractals) -->
+      <canvas id="canvas2dLayer" class="viz-layer" width="1280" height="720"></canvas>
+
+      <!-- Format 2: Three.js WebGL 3D Layer -->
+      <canvas id="webglThreeLayer" class="viz-layer" width="1280" height="720" hidden></canvas>
+
+      <!-- Format 3: Raw WebGL GLSL Fragment Shader Layer -->
+      <canvas id="glslShaderLayer" class="viz-layer" width="1280" height="720" hidden></canvas>
+
+      <!-- Format 4: Scalable Vector Graphics (<svg>) DOM Layer -->
+      <svg id="svgDomLayer" class="viz-layer" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" hidden></svg>
+
+      <!-- Format 5: Pure CSS3 3D Hardware Transforms Layer -->
+      <div id="css3dVizLayer" class="viz-layer" hidden>
+        <div class="css3d-scene" id="css3dSceneRoot"></div>
+      </div>
+
+      <!-- Format 6: ASCII / Matrix Real-Time Character Matrix Layer -->
+      <pre id="asciiVizLayer" class="viz-layer" hidden></pre>
+
+      <!-- Optional Screen Saver Clock & Title Overlay -->
+      <div id="screensaverHudOverlay" hidden>
+        <div class="ss-clock" id="ssClockTime">12:00:00</div>
+        <div class="ss-sub" id="ssCustomBrandTxt">🦅 HAWKENIGMA • INFINITE CHROMATIC HAWK-EYE</div>
+      </div>
+
+      <!-- Top Stage HUD -->
+      <div class="enigma-hud-top">
+        <div class="e-pill hide-in-fs">
+          <span class="chip" style="background:#F43F5E;color:#FFF;font-weight:900">🌀 HAWKENIGMA</span>
+          <span id="activeTplBadge" style="color:var(--accent);font-weight:900">🦅 1. Infinite Hawk-Eye Droste Zoom</span>
+          <span>•</span>
+          <span id="activeFmtBadge" style="color:#00F5D4">Format: HTML5 2D Canvas</span>
+        </div>
+
+        <div class="e-pill">
+          <span id="fftTelemetryHud" style="color:#34D399">BASS: 82% • MID: 64% • HIGH: 49%</span>
+          <button type="button" id="toggleSsHudBtn" class="chip" style="cursor:pointer">🕒 Clock HUD</button>
+          <button type="button" id="launchFullscreenVizBtn" style="background:linear-gradient(135deg,#D4AF37,#059669);color:#090C12;font-weight:900">
+            ⛶ Full-Screen Screen Saver
+          </button>
+        </div>
+      </div>
+
+      <!-- Bottom Stage Audio & HTML Format Switcher HUD -->
+      <div class="enigma-hud-bottom hide-in-fs">
+        <div class="e-pill" style="width:100%;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+            <button type="button" id="playDemoSynthBtn" style="background:#059669;color:#fff;font-weight:900;padding:5px 12px">
+              ▶ Play 130 BPM Electro-Hawk Synth
+            </button>
+            <button type="button" id="micInputVizBtn" style="background:#DC2626;color:#fff;font-weight:800;padding:5px 10px" title="React to live Microphone or Line-In audio after tap">
+              🎙️ Live Mic Input
+            </button>
+            <button type="button" id="uploadAudioVizBtn" class="chip" style="cursor:pointer;border-color:#38BDF8;color:#38BDF8;font-weight:800">
+              📂 Load Audio (.MP3/.WAV)
+            </button>
+            <input type="file" id="vizAudioFileIn" accept="audio/*" hidden>
+            <audio id="uploadedAudioEl" controls hidden style="height:28px;max-width:190px"></audio>
+            <label style="font:700 11px var(--mono)" title="Automatically drives the visualizer with rhythmic LFOs when no external audio is playing">
+              <input type="checkbox" id="autoPilotLfoChk" checked> 🤖 Auto-Pilot Beat LFO
+            </label>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+            <span style="color:var(--accent);font-weight:800">💻 HTML RENDER FORMAT:</span>
+            <div class="seg" id="htmlFormatSeg">
+              <button type="button" data-fmt="canvas2d" aria-pressed="true">1. Canvas 2D</button>
+              <button type="button" data-fmt="threejs" aria-pressed="false">2. Three.js 3D</button>
+              <button type="button" data-fmt="glsl" aria-pressed="false">3. GLSL Shader</button>
+              <button type="button" data-fmt="svg" aria-pressed="false">4. SVG Vector</button>
+              <button type="button" data-fmt="css3d" aria-pressed="false">5. CSS3 3D DOM</button>
+              <button type="button" data-fmt="ascii" aria-pressed="false">6. ASCII Matrix</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- 12 VISUALIZATION TEMPLATES (INFINITE HAWK-EYE + CHROMATIC EXTENSIONS) -->
+  <!-- ===================================================================== -->
+  <section class="deck enigma-controls-area" style="gap:8px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+      <span class="subhead">🦅 1. Choose a Visualization Template (Featuring the Infinite Hawk-Eye Recursive Zoom &amp; Chromatic Extensions)</span>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <label style="font:700 11px var(--mono)">🔄 Auto-Cycle Templates (Screen Saver)
+          <select id="autoCycleTplSel" style="font-weight:800;min-height:28px">
+            <option value="0" selected>Off (Lock Current Template)</option>
+            <option value="10">Every 10 Seconds</option>
+            <option value="20">Every 20 Seconds</option>
+            <option value="45">Every 45 Seconds</option>
+          </select>
+        </label>
+        <button type="button" id="exportStandaloneHtmlBtn" style="background:linear-gradient(135deg,#D4AF37,#059669);color:#090C12;font-weight:900;padding:6px 12px">
+          💾 Export Standalone Full-Screen .HTML Screen Saver
+        </button>
+        <button type="button" id="exportAllFormatsZipBtn" style="background:#0284C7;color:#fff;font-weight:800;padding:6px 12px">
+          📦 Export All 6 HTML Formats (.ZIP)
+        </button>
+      </div>
+    </div>
+
+    <div class="tpl-grid" id="templateCardsGrid">
+      <button type="button" class="tpl-card" data-tpl="hawk_eye_droste" aria-pressed="true">
+        <span style="color:#D4AF37">🦅 1. Infinite Hawk-Eye Droste Zoom</span>
+        <small style="color:var(--mute);font-size:10px">Zooms into the Hawk's blazing eye to reveal another Chromatic Hawk infinitely</small>
+      </button>
+      <button type="button" class="tpl-card" data-tpl="chromatic_wings">
+        <span style="color:#00F5D4">🦅 2. Cyber-Raptor Chromatic Wings</span>
+        <small style="color:var(--mute);font-size:10px">20-key HawkChroma spectral wing feathers + talon sub-bass shockwaves</small>
+      </button>
+      <button type="button" class="tpl-card" data-tpl="hawk_mandala">
+        <span style="color:#A855F7">🦅 3. Dual-Iris Hawk Kaleidoscope</span>
+        <small style="color:var(--mute);font-size:10px">8-fold mirrored raptor geometry &amp; chromatic iris harmonic rings</small>
+      </button>
+      <button type="button" class="tpl-card" data-tpl="keycap_tunnel">
+        <span style="color:#38BDF8">🎹 4. HawkChroma 2×10 Warp Tunnel</span>
+        <small style="color:var(--mute);font-size:10px">Infinite 3D corridor of glowing 2×10 mechanical keycaps synced to FFT</small>
+      </button>
+      <button type="button" class="tpl-card" data-tpl="ferro_sphere">
+        <span style="color:#10B981">🌐 5. 3D Ferrofluid Chromatic Sphere</span>
+        <small style="color:var(--mute);font-size:10px">Spiky magnetic liquid-metal raptor core pulsing in 3D space</small>
+      </button>
+      <button type="button" class="tpl-card" data-tpl="plasma_nebula">
+        <span style="color:#EC4899">✨ 6. Chromatic Nebula &amp; Laser Eye</span>
+        <small style="color:var(--mute);font-size:10px">Volumetric cosmic plasma waves with a central raptor eye vortex</small>
+      </button>
+      <button type="button" class="tpl-card" data-tpl="sacred_lissajous">
+        <span style="color:#FACC15">📐 7. Laser Oscilloscope Lissajous</span>
+        <small style="color:var(--mute);font-size:10px">XY vector laser harmonic curves &amp; sacred geometry</small>
+      </button>
+      <button type="button" class="tpl-card" data-tpl="outrun_horizon">
+        <span style="color:#F97316">🌊 8. Synthwave Hawk Horizon Grid</span>
+        <small style="color:var(--mute);font-size:10px">Perspective neon terrain grid with soaring chromatic hawk silhouette</small>
+      </button>
+      <button type="button" class="tpl-card" data-tpl="dna_fountain">
+        <span style="color:#34D399">🧬 9. Chromatic DNA Helix Fountain</span>
+        <small style="color:var(--mute);font-size:10px">Twisting double-helix spectrum strands &amp; particle fountain</small>
+      </button>
+      <button type="button" class="tpl-card" data-tpl="starfield_warp">
+        <span style="color:#E2E8F0">🌌 10. Hyperspace Starfield Screen Saver</span>
+        <small style="color:var(--mute);font-size:10px">Classic hyperspace warp stars with bass-reactive nebula rings</small>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- LOWER 2-COLUMN STUDIO: PARAMETERS + MULTI-FORMAT HTML CODE GENERATOR  -->
+  <!-- ===================================================================== -->
+  <main class="enigma-grid enigma-controls-area">
+
+    <!-- LEFT: DEEP CUSTOMIZATION, HAWK-EYE FRACTAL & SCREEN SAVER PARAMETERS -->
+    <section class="deck" style="gap:8px">
+      <span class="subhead">🎛️ 2. Customize Infinite Hawk-Eye Zoom, Chromatic Palette &amp; Screen Saver Parameters</span>
+
+      <div class="subcard" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px">
+        <label style="display:flex;justify-content:space-between;align-items:center;font:700 11px var(--mono)">
+          <span>🔍 Eye Zoom Speed</span>
+          <input type="range" id="prmZoomSpeed" min="5" max="100" value="42" style="width:95px">
+          <b id="lblZoomSpeed" class="chip">42%</b>
+        </label>
+        <label style="display:flex;justify-content:space-between;align-items:center;font:700 11px var(--mono)">
+          <span>🌀 Fractal Depth Layers</span>
+          <input type="range" id="prmFractalDepth" min="2" max="6" value="4" style="width:95px">
+          <b id="lblFractalDepth" class="chip">4 Hawks</b>
+        </label>
+        <label style="display:flex;justify-content:space-between;align-items:center;font:700 11px var(--mono)">
+          <span>🔊 Bass Reactivity</span>
+          <input type="range" id="prmBassReact" min="10" max="200" value="125" style="width:95px">
+          <b id="lblBassReact" class="chip">125%</b>
+        </label>
+        <label style="display:flex;justify-content:space-between;align-items:center;font:700 11px var(--mono)">
+          <span>🌈 Chromatic Shift</span>
+          <input type="range" id="prmColorSpeed" min="0" max="100" value="55" style="width:95px">
+          <b id="lblColorSpeed" class="chip">55%</b>
+        </label>
+        <label style="display:flex;justify-content:space-between;align-items:center;font:700 11px var(--mono)">
+          <span>✨ Feather / Ray Count</span>
+          <input type="range" id="prmRayCount" min="8" max="64" step="2" value="24" style="width:95px">
+          <b id="lblRayCount" class="chip">24</b>
+        </label>
+        <label style="display:flex;justify-content:space-between;align-items:center;font:700 11px var(--mono)">
+          <span>💫 Spiral Twist (°)</span>
+          <input type="range" id="prmSpiralTwist" min="-90" max="90" value="28" style="width:95px">
+          <b id="lblSpiralTwist" class="chip">28°</b>
+        </label>
+      </div>
+
+      <div class="subcard" style="justify-content:space-between;gap:8px">
+        <label style="font:700 11px var(--mono)">🎨 Chromatic Palette
+          <select id="prmPaletteSel" style="font-weight:800;border-color:var(--accent)">
+            <option value="hawk_gold" selected>🦅 ForefrontHawk Gold, Emerald &amp; Cyan</option>
+            <option value="chroma_20">🎹 Full 20-Key HawkChroma Spectrum</option>
+            <option value="cyber_neon">🟣 Cyberpunk Magenta, Cyan &amp; Electric Violet</option>
+            <option value="solar_fire">🔥 Phoenix Solar Flare (Crimson, Amber &amp; White)</option>
+            <option value="matrix_phos">🟢 Matrix / Pip-Boy Phosphor Green</option>
+            <option value="custom_sync">🔗 Live Synced Active #HEX Color</option>
+          </select>
+        </label>
+        <label style="font:700 11px var(--mono)">🏷️ Screen Saver Title / Watermark
+          <input type="text" id="prmBrandTextIn" value="🦅 HAWKENIGMA • INFINITE CHROMATIC HAWK-EYE" style="width:240px;font:700 11px var(--mono)">
+        </label>
+      </div>
+
+      <div class="subcard" style="justify-content:space-between;gap:8px">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;font:700 11px var(--mono)">
+          <label><input type="checkbox" id="chkMirrorKaleido"> 🪞 Kaleidoscope Mirror</label>
+          <label><input type="checkbox" id="chkShowKeycapRing" checked> 🎹 20-Key Chroma Outer Ring</label>
+          <label><input type="checkbox" id="chkIdleScreensaver"> 🌙 Auto-Start Screen Saver on Idle (15s)</label>
+        </div>
+        <button type="button" id="beamVizToShineBtn" class="chip" style="cursor:pointer;border-color:#00F5D4;color:#00F5D4;font-weight:800">
+          📡 Broadcast Colors to HawkRGB &amp; HawkShine
+        </button>
+      </div>
+    </section>
+
+    <!-- RIGHT: LIVE MULTI-FORMAT HTML CODE GENERATOR & STANDALONE EXPORTER -->
+    <aside class="deck" style="gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+        <span class="subhead">💻 3. Live HTML Visualization Code Generator (All 6 Web Formats)</span>
+        <div style="display:flex;gap:5px;flex-wrap:wrap">
+          <button type="button" id="copyHtmlCodeBtn" class="chip" style="cursor:pointer;border-color:#34D399;color:#34D399;font-weight:800">📋 Copy HTML Code</button>
+          <button type="button" id="downloadCurrentFmtHtmlBtn" class="chip" style="cursor:pointer;background:var(--accent);color:#090C12;font-weight:900">💾 Download .HTML File</button>
+        </div>
+      </div>
+
+      <p style="margin:0;font-size:11.5px;color:var(--mute)">
+        Switch between <b>Canvas 2D</b>, <b>Three.js 3D</b>, <b>GLSL Fragment Shader</b>, <b>SVG Vector DOM</b>, <b>CSS3 3D</b>, or <b>ASCII Matrix</b>—the code below updates live with your exact parameters and exports as a standalone full-screen <code>.html</code> file:
+      </p>
+
+      <textarea id="liveHtmlCodeBox" readonly style="width:100%;height:215px;background:#04070F;color:#38BDF8;border:1px solid var(--line);border-radius:10px;padding:8px;font:600 10.5px/1.38 var(--mono);resize:vertical"></textarea>
+    </aside>
+
+  </main>
+
+</div>
+
+<script>
+var FONTS={
+system:'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif',
+calibri:'Calibri,"Segoe UI",Candara,sans-serif',
+arial:'Arial,"Helvetica Neue",Helvetica,sans-serif',
+inter:'"Inter",system-ui,sans-serif',
+serif:'Georgia,"Times New Roman",Times,serif',
+mono:'"JetBrains Mono",Consolas,ui-monospace,monospace',
+space:'"Space Grotesk",system-ui,sans-serif',
+orbitron:'"Orbitron",system-ui,sans-serif',
+pixel:'"Press Start 2P",ui-monospace,monospace'
+};
+var ACC={sky:"#38BDF8",gold:"#D4AF37",green:"#34D399",amber:"#FBBF24",rose:"#FB7185",violet:"#A78BFA"};
+var OVERLAY_LIST=[
+["ui-sophisticated","★ Sophisticated (ForefrontHawk)"],
+["ui-tech","★ Tech (CAD Telemetry)"],
+["ui-futuristic","★ Futuristic (Holo-Glass)"],
+["none","0. Classic UI"],["mech-ibm","1. IBM Model M"],["mech-c64","2. Commodore 64"],
+["mech-cyber","3. Cyber Neon"],["mech-typewriter","4. Typewriter"],["mech-arcade","5. Arcade Sanwa"],
+["plug-vst","6. VST Rack"],["plug-eurorack","7. Eurorack"],["plug-mpc","8. Akai MPC"],
+["plug-dmx","9. GrandMA DMX"],["plug-davinci","10. DaVinci Panel"],["app-winamp","11. Winamp 2.x"],
+["app-ps3","12. Photoshop 3"],["app-lotus","13. Lotus 1-2-3"],["app-soundforge","14. FastTracker"],
+["app-hypercard","15. HyperCard"],["os-win95","16. Windows 95"],["os-winxp","17. Windows XP"],
+["os-mac9","18. Mac OS 9"],["os-amiga","19. AmigaOS 1.3"],["os-pipboy","20. CRT Pip-Boy"]
+];
+var UI_STATE={
+mode:"dark",overlay:"ui-sophisticated",font:"system",accent:"gold",
+cBg:"#090B10",cPanel:"#121620",cText:"#F8FAFC",cPlate:"#181D2A",
+activeColor:"#10B981",activeLabel:"GRN"
+};
+var suiteChan=null,chromaChan=null;
+try{
+if(typeof BroadcastChannel!=="undefined"){
+suiteChan=new BroadcastChannel("forefronthawk_suite_bus");
+chromaChan=new BroadcastChannel("hawkchroma_2x10_bus");
+}
+}catch(e){}
+var chromaPopupWin=null;
+function readRootDomainCookie(){
+try{
+var m=document.cookie.match(/(?:^|;\s*)ffh_ui=([^;]+)/);
+if(m&&m[1])return JSON.parse(decodeURIComponent(m[1]));
+}catch(e){}
+return null;
+}
+function writeRootDomainCookie(obj){
+try{
+var val=encodeURIComponent(JSON.stringify(obj));
+document.cookie="ffh_ui="+val+"; domain=.forefronthawk.com; path=/; max-age=31536000; SameSite=Lax";
+document.cookie="ffh_ui="+val+"; path=/; max-age=31536000; SameSite=Lax";
+}catch(e){}
+}
+function readUrlHashState(){
+try{
+if(location.hash&&location.hash.indexOf("ffh=")>-1){
+var part=location.hash.split("ffh=")[1].split("&")[0];
+return JSON.parse(decodeURIComponent(part));
+}
+}catch(e){}
+return null;
+}
+function updateSubdomainBannerLinks(){
+try{
+writeRootDomainCookie(UI_STATE);
+document.querySelectorAll("a.sub-link").forEach(function(a){
+var base=a.dataset.sub||a.getAttribute("href").split("#")[0];
+a.href=base;
+a.onclick=function(){writeRootDomainCookie(UI_STATE)};
+});
+}catch(e){}
+}
+function loadSharedUi(){
+try{
+var fromHash=readUrlHashState();
+var fromCookie=readRootDomainCookie();
+var fromLs=JSON.parse(localStorage.getItem("forefronthawk_shared_ui")||localStorage.getItem("hawkchroma_v4")||"null");
+var sv=fromHash||fromCookie||fromLs;
+if(sv){
+if(sv.mode)UI_STATE.mode=sv.mode;
+if(sv.overlay)UI_STATE.overlay=sv.overlay;
+if(sv.font)UI_STATE.font=sv.font;
+if(sv.accent)UI_STATE.accent=sv.accent;
+if(sv.cBg)UI_STATE.cBg=sv.cBg;
+if(sv.cPanel)UI_STATE.cPanel=sv.cPanel;
+if(sv.cText)UI_STATE.cText=sv.cText;
+if(sv.cPlate)UI_STATE.cPlate=sv.cPlate;
+if(sv.activeColor||sv.shown||sv.hex)UI_STATE.activeColor=sv.activeColor||sv.shown||sv.hex;
+if(fromHash)writeRootDomainCookie(UI_STATE);
+}
+}catch(e){}
+applySharedUiToDom();
+updateSubdomainBannerLinks();
+}
+function saveAndBroadcastUi(broadcast){
+try{
+localStorage.setItem("forefronthawk_shared_ui",JSON.stringify(UI_STATE));
+writeRootDomainCookie(UI_STATE);
+updateSubdomainBannerLinks();
+var hc=JSON.parse(localStorage.getItem("hawkchroma_v4")||"{}");
+hc.mode=UI_STATE.mode;hc.overlay=UI_STATE.overlay;hc.font=UI_STATE.font;
+hc.cBg=UI_STATE.cBg;hc.cPanel=UI_STATE.cPanel;hc.cText=UI_STATE.cText;hc.cPlate=UI_STATE.cPlate;
+hc.shown=UI_STATE.activeColor;hc.hex=UI_STATE.activeColor;
+localStorage.setItem("hawkchroma_v4",JSON.stringify(hc));
+}catch(e){}
+applySharedUiToDom();
+if(broadcast){
+if(suiteChan){try{suiteChan.postMessage({type:"FFH_UI_SYNC",ui:UI_STATE})}catch(e){}}
+if(window.opener){try{window.opener.postMessage({type:"FFH_UI_SYNC",ui:UI_STATE},"*")}catch(e){}}
+if(chromaPopupWin&&!chromaPopupWin.closed){try{chromaPopupWin.postMessage({type:"FFH_UI_SYNC",ui:UI_STATE},"*")}catch(e){}}
+}
+}
+function applySharedUiToDom(){
+var r=document.documentElement;
+r.setAttribute("data-theme",UI_STATE.mode||"dark");
+if(UI_STATE.overlay&&UI_STATE.overlay!=="none")r.setAttribute("data-ov",UI_STATE.overlay);
+else r.removeAttribute("data-ov");
+r.style.setProperty("--font",FONTS[UI_STATE.font]||FONTS.system);
+r.style.setProperty("--accent",ACC[UI_STATE.accent]||"#D4AF37");
+if(UI_STATE.mode==="custom_live"){
+r.style.setProperty("--bg",UI_STATE.cBg);
+r.style.setProperty("--panel",UI_STATE.cPanel);
+r.style.setProperty("--text",UI_STATE.cText);
+r.style.setProperty("--plate",UI_STATE.cPlate);
+}else{
+r.style.removeProperty("--bg");r.style.removeProperty("--panel");
+r.style.removeProperty("--text");r.style.removeProperty("--plate");
+}
+r.style.setProperty("--active-c",UI_STATE.activeColor);
+var sw=document.getElementById("chromaLiveSwatch");
+if(sw){
+sw.style.background=UI_STATE.activeColor;
+sw.textContent=UI_STATE.activeColor+" ("+UI_STATE.activeLabel+")";
+}
+if(document.getElementById("sharedOverlaySel"))document.getElementById("sharedOverlaySel").value=UI_STATE.overlay;
+if(document.getElementById("sharedThemeSel"))document.getElementById("sharedThemeSel").value=UI_STATE.mode;
+if(document.getElementById("sharedFontSel"))document.getElementById("sharedFontSel").value=UI_STATE.font;
+if(typeof onChromaColorReceived==="function")onChromaColorReceived(UI_STATE.activeColor,UI_STATE.activeLabel);
+}
+function initSharedCustomizerBar(){
+var popBtn=document.getElementById("openChromaPopupBtn");
+if(popBtn){
+popBtn.onclick=function(){
+var payload=encodeURIComponent(JSON.stringify(UI_STATE));
+writeRootDomainCookie(UI_STATE);
+chromaPopupWin=window.open("https://chroma.forefronthawk.com","HawkChromaCompanion","width=520,height=760");
+};
+}
+window.addEventListener("message",function(e){
+if(!e.data)return;
+if(e.data.type==="FFH_UI_SYNC"&&e.data.ui){
+Object.assign(UI_STATE,e.data.ui);
+saveAndBroadcastUi(false);
+}else if(e.data.hex){
+UI_STATE.activeColor=e.data.hex.toUpperCase();
+UI_STATE.activeLabel=e.data.label||"CHROMA";
+saveAndBroadcastUi(false);
+}
+});
+var lastCookieJson="";
+setInterval(function(){
+var ck=readRootDomainCookie();
+if(ck){
+var j=JSON.stringify(ck);
+if(j!==lastCookieJson){
+lastCookieJson=j;
+Object.assign(UI_STATE,ck);
+applySharedUiToDom();
+}
+}
+},800);
+var ovSel=document.getElementById("sharedOverlaySel");
+if(ovSel&&!ovSel.options.length){
+OVERLAY_LIST.forEach(function(o){
+var op=document.createElement("option");op.value=o[0];op.textContent=o[1];ovSel.appendChild(op);
+});
+ovSel.onchange=function(){UI_STATE.overlay=this.value;saveAndBroadcastUi(true)};
+}
+var thSel=document.getElementById("sharedThemeSel");
+if(thSel){thSel.onchange=function(){UI_STATE.mode=this.value;saveAndBroadcastUi(true)}}
+var fnSel=document.getElementById("sharedFontSel");
+if(fnSel){fnSel.onchange=function(){UI_STATE.font=this.value;saveAndBroadcastUi(true)}}
+var custBtn=document.getElementById("toggleSharedCustBtn");
+if(custBtn){
+custBtn.onclick=function(){
+var p=document.getElementById("sharedCustPanel");
+if(p)p.hidden=!p.hidden;
+};
+}
+["cBgIn","cPanelIn","cTextIn"].forEach(function(id){
+var el=document.getElementById(id);
+if(el)el.oninput=function(){
+UI_STATE.cBg=document.getElementById("cBgIn").value;
+UI_STATE.cPanel=document.getElementById("cPanelIn").value;
+UI_STATE.cText=document.getElementById("cTextIn").value;
+UI_STATE.mode="custom_live";
+saveAndBroadcastUi(true);
+};
+});
+}
+window.addEventListener("focus",function(){if(typeof loadSharedUi==="function")loadSharedUi()});
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&typeof loadSharedUi==="function")loadSharedUi()});
+window.addEventListener("storage",function(e){
+if(e.key==="forefronthawk_shared_ui"||e.key==="hawkchroma_v4")loadSharedUi();
+});
+if(suiteChan){
+suiteChan.onmessage=function(e){
+if(e.data&&e.data.ui){
+Object.assign(UI_STATE,e.data.ui);
+applySharedUiToDom();
+}
+};
+}
+if(chromaChan){
+chromaChan.onmessage=function(e){
+if(e.data&&e.data.hex){
+UI_STATE.activeColor=e.data.hex.toUpperCase();
+UI_STATE.activeLabel=e.data.label||"CHROMA";
+saveAndBroadcastUi(false);
+}
+};
+}
+var stopCycleIdx = 0;
+
+
+// ============================================================================
+// HAWKFLIES AERIAL GOOGLE MAPS & SATELLITE PASSIVE FLIGHT ENGINE
+// ============================================================================
+
+
+
+
+
+// ============================================================================
+// HAWKENIGMA — MULTI-FORMAT AUDIO VISUALIZER, INFINITE HAWK-EYE DROSTE ENGINE
+// & STANDALONE FULL-SCREEN HTML SCREEN SAVER EXPORTER
+// ============================================================================
+(function(){
+  var CHROMA_20_PALETTE = [
+    "#EF4444","#F97316","#F59E0B","#EAB308","#84CC16",
+    "#22C55E","#10B981","#14B8A6","#06B6D4","#0EA5E9",
+    "#3B82F6","#6366F1","#8B5CF6","#A855F7","#D946EF",
+    "#EC4899","#F43F5E","#D4AF37","#38BDF8","#34D399"
+  ];
+
+  var PALETTES = {
+    hawk_gold:   ["#D4AF37", "#10B981", "#00F5D4", "#38BDF8", "#FACC15", "#F43F5E"],
+    chroma_20:   CHROMA_20_PALETTE,
+    cyber_neon:  ["#FF007F", "#00F5D4", "#8B5CF6", "#38BDF8", "#F43F5E", "#FACC15"],
+    solar_fire:  ["#EF4444", "#F97316", "#FACC15", "#FEF08A", "#EA580C", "#DC2626"],
+    matrix_phos: ["#00FF41", "#22C55E", "#10B981", "#4ADE80", "#86EFAC", "#15803D"],
+    custom_sync: [UI_STATE.activeColor || "#D4AF37", "#00F5D4", "#38BDF8", "#A855F7"]
+  };
+
+  var ENIGMA = {
+    template: "hawk_eye_droste",
+    format: "canvas2d", // "canvas2d" | "threejs" | "glsl" | "svg" | "css3d" | "ascii"
+    zoomSpeed: 0.42,
+    fractalDepth: 4,
+    bassReact: 1.25,
+    colorSpeed: 0.55,
+    rayCount: 24,
+    spiralTwistDeg: 28,
+    paletteId: "hawk_gold",
+    brandText: "🦅 HAWKENIGMA • INFINITE CHROMATIC HAWK-EYE",
+    mirrorKaleido: false,
+    showKeycapRing: true,
+    autoPilot: true,
+    demoSynthPlaying: false,
+    micActive: false,
+    autoCycleSec: 0,
+    bass: 0.65,
+    mid: 0.48,
+    high: 0.35,
+    bins: new Float32Array(64)
+  };
+
+  // Update custom_sync palette whenever a color arrives from HawkChroma or Paste
+  window.onChromaColorReceived = function(hex){
+    PALETTES.custom_sync[0] = hex;
+  };
+
+  function getActivePalette(){
+    PALETTES.custom_sync[0] = UI_STATE.activeColor || "#D4AF37";
+    return PALETTES[ENIGMA.paletteId] || PALETTES.hawk_gold;
+  }
+
+  // ==========================================================================
+  // WEB AUDIO FFT ANALYSER + 130 BPM ELECTRO-HAWK SYNTH + MIC + FILE PLAYER
+  // ==========================================================================
+  var audioCtx = null, analyser = null, freqData = null;
+  var demoTimer = null, demoStep = 0;
+
+  function ensureVizAudio(){
+    if(!audioCtx){
+      var AC = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AC();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.82;
+      freqData = new Uint8Array(analyser.frequencyBinCount);
+      analyser.connect(audioCtx.destination);
+    }
+    if(audioCtx.state === "suspended") audioCtx.resume();
+  }
+
+  function triggerElectroHawkNote(midi, dur, isKick){
+    ensureVizAudio();
+    var now = audioCtx.currentTime;
+    if(isKick){
+      var ko = audioCtx.createOscillator();
+      var kg = audioCtx.createGain();
+      ko.frequency.setValueAtTime(145, now);
+      ko.frequency.exponentialRampToValueAtTime(36, now + 0.16);
+      kg.gain.setValueAtTime(0.65, now);
+      kg.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+      ko.connect(kg); kg.connect(analyser);
+      ko.start(now); ko.stop(now + 0.23);
+    }
+    var osc = audioCtx.createOscillator();
+    var sub = audioCtx.createOscillator();
+    var flt = audioCtx.createBiquadFilter();
+    var g = audioCtx.createGain();
+    var freq = 440 * Math.pow(2, (midi - 69) / 12);
+    osc.type = "sawtooth"; osc.frequency.setValueAtTime(freq, now);
+    sub.type = "square";   sub.frequency.setValueAtTime(freq * 0.5, now);
+    flt.type = "lowpass";
+    flt.frequency.setValueAtTime(320, now);
+    flt.frequency.exponentialRampToValueAtTime(2800, now + 0.05);
+    flt.frequency.exponentialRampToValueAtTime(420, now + dur);
+    flt.Q.value = 6.5;
+    g.gain.setValueAtTime(0.24, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + dur);
+    osc.connect(flt); sub.connect(flt); flt.connect(g); g.connect(analyser);
+    osc.start(now); sub.start(now);
+    osc.stop(now + dur + 0.02); sub.stop(now + dur + 0.02);
+  }
+
+  function updateAudioSpectrum(t){
+    if(analyser && (ENIGMA.demoSynthPlaying || ENIGMA.micActive || !document.getElementById("uploadedAudioEl").paused)){
+      analyser.getByteFrequencyData(freqData);
+      var bSum = 0, mSum = 0, hSum = 0;
+      for(var i=0; i<64; i++){
+        var v = (freqData[i] || 0) / 255.0;
+        ENIGMA.bins[i] = v;
+        if(i < 10) bSum += v;
+        else if(i < 32) mSum += v;
+        else hSum += v;
+      }
+      ENIGMA.bass = Math.min(1.5, (bSum / 10) * ENIGMA.bassReact);
+      ENIGMA.mid  = Math.min(1.5, (mSum / 22) * ENIGMA.bassReact);
+      ENIGMA.high = Math.min(1.5, (hSum / 32) * ENIGMA.bassReact);
+    } else if(ENIGMA.autoPilot){
+      // Rhythmic 130 BPM Auto-Pilot Beat LFO so the visualizer & screen saver pulse hypnotically even without audio!
+      var beatPhase = (t * (130 / 60)) % 1.0;
+      var kickEnv = Math.pow(Math.max(0, 1.0 - beatPhase * 2.2), 2.4);
+      ENIGMA.bass = (0.32 + kickEnv * 0.68) * (ENIGMA.bassReact * 0.85);
+      ENIGMA.mid  = 0.35 + 0.45 * Math.abs(Math.sin(t * 3.4));
+      ENIGMA.high = 0.25 + 0.45 * Math.abs(Math.cos(t * 6.2));
+      for(var k=0; k<64; k++){
+        var wave = Math.sin(k * 0.28 - t * 5.0) * 0.5 + 0.5;
+        var kickBoost = k < 12 ? kickEnv * 0.7 : 0;
+        ENIGMA.bins[k] = Math.min(1.0, (wave * 0.55 + kickBoost) * (1 - k / 95));
+      }
+    }
+    var hud = document.getElementById("fftTelemetryHud");
+    if(hud){
+      hud.textContent = "BASS: " + Math.round(ENIGMA.bass * 100) + "% • MID: " + Math.round(ENIGMA.mid * 100) + "% • HIGH: " + Math.round(ENIGMA.high * 100) + "%";
+    }
+  }
+
+  // ==========================================================================
+  // CORE ARTWORK ROUTINE: FIERCE CHROMATIC HAWK & EYE (USED FOR DROSTE RECURSION!)
+  // Draws a complete fierce Chromatic Raptor centered at (0,0) with its Eye Pupil
+  // also centered at (0,0), so scaling by 4^level creates a seamless infinite
+  // Hawk-inside-the-Hawk's-Eye Droste zoom!
+  // ==========================================================================
+  function drawSingleChromaticHawkLayer(ctx, pal, colOffset, t, bass, mid, high){
+    var cPrimary   = pal[(colOffset) % pal.length];
+    var cSecondary = pal[(colOffset + 1) % pal.length];
+    var cTertiary  = pal[(colOffset + 2) % pal.length];
+    var cEyeGlow   = pal[(colOffset + 3) % pal.length];
+
+    ctx.save();
+
+    // 1. Outer 20-Key HawkChroma Spectral Wing Feathers radiating from the Hawk
+    var rays = ENIGMA.rayCount;
+    for(var r=0; r<rays; r++){
+      var ang = (r / rays) * Math.PI * 2 + Math.sin(t * 0.6) * 0.08;
+      var binVal = ENIGMA.bins[r % 32] || 0.4;
+      var innerR = 105;
+      var outerR = 165 + binVal * 95 * (0.6 + bass * 0.5);
+      var fCol = pal[(r + colOffset) % pal.length];
+
+      ctx.save();
+      ctx.rotate(ang);
+      ctx.fillStyle = fCol;
+      ctx.strokeStyle = "#FFFFFF";
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(innerR, -7);
+      ctx.lineTo(outerR, 0);
+      ctx.lineTo(innerR, 7);
+      ctx.closePath();
+      ctx.globalAlpha = 0.78;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // 2. Fierce Geometric Cyber-Raptor Head Crest, Swept Brow & Hooked Beak Silhouette
+    // Designed symmetrically/radially around the central Eye at (0,0) so zooming into (0,0) enters the Eye!
+    ctx.globalAlpha = 0.94;
+    ctx.fillStyle = "#080D1A";
+    ctx.strokeStyle = cPrimary;
+    ctx.lineWidth = 4.5;
+
+    // Raptor Crown & Swept Wing-Head Plumes
+    ctx.beginPath();
+    ctx.moveTo(-210, -45);
+    ctx.lineTo(-125, -145 - bass * 22);
+    ctx.lineTo(-45, -115);
+    ctx.lineTo(0, -175 - mid * 25); // Top Crown Crest
+    ctx.lineTo(45, -115);
+    ctx.lineTo(125, -145 - bass * 22);
+    ctx.lineTo(210, -45);
+    ctx.lineTo(165, 55);
+    ctx.lineTo(75, 125);
+    ctx.lineTo(0, 175 + bass * 20); // Sharp Hooked Raptor Beak Tip below eye center
+    ctx.lineTo(-75, 125);
+    ctx.lineTo(-165, 55);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Fierce Raptor Brow Ridge Arching Over the Central Eye
+    ctx.fillStyle = cPrimary;
+    ctx.beginPath();
+    ctx.moveTo(-145, -28);
+    ctx.quadraticCurveTo(0, -108 - bass * 18, 145, -28);
+    ctx.quadraticCurveTo(0, -64, -145, -28);
+    ctx.closePath();
+    ctx.fill();
+
+    // Chromatic Cheek & Beak Armor Plates
+    ctx.strokeStyle = cSecondary;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(-120, 24); ctx.lineTo(-38, 92); ctx.lineTo(0, 148); ctx.lineTo(38, 92); ctx.lineTo(120, 24);
+    ctx.stroke();
+
+    // 3. The Blazing Raptor Eye Iris Centered at (0,0)
+    var irisR = 82 + bass * 14;
+    var irisGrad = ctx.createRadialGradient(0, 0, irisR * 0.22, 0, 0, irisR);
+    irisGrad.addColorStop(0, cEyeGlow);
+    irisGrad.addColorStop(0.55, cSecondary);
+    irisGrad.addColorStop(0.88, cTertiary);
+    irisGrad.addColorStop(1, "#040711");
+
+    ctx.fillStyle = irisGrad;
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(0, 0, irisR, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Intricate Chromatic Iris Striations (Fiber Rays inside the Hawk's Eye)
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.lineWidth = 1.4;
+    for(var ir=0; ir<20; ir++){
+      var iAng = (ir / 20) * Math.PI * 2 - t * 0.8;
+      var iLen = irisR * (0.42 + (ENIGMA.bins[ir] || 0.3) * 0.52);
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(iAng) * (irisR * 0.28), Math.sin(iAng) * (irisR * 0.28));
+      ctx.lineTo(Math.cos(iAng) * iLen, Math.sin(iAng) * iLen);
+      ctx.stroke();
+    }
+
+    // 4. The Deep Raptor Pupil Portal at (0,0) (Radius ~ 22px, where the NEXT recursive Hawk lives!)
+    var pupilR = 23;
+    ctx.fillStyle = "#02040A";
+    ctx.strokeStyle = cPrimary;
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.arc(0, 0, pupilR, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  // ==========================================================================
+  // FORMAT 1: HTML5 2D CANVAS RENDERER (ALL 10 TEMPLATES + INFINITE HAWK-EYE)
+  // ==========================================================================
+  var cv2d = document.getElementById("canvas2dLayer");
+  var ctx2d = cv2d.getContext("2d");
+
+  function renderCanvas2D(t){
+    var w = cv2d.width, h = cv2d.height;
+    var cx = w / 2, cy = h / 2;
+    var pal = getActivePalette();
+    var bass = ENIGMA.bass, mid = ENIGMA.mid, high = ENIGMA.high;
+
+    ctx2d.fillStyle = "rgba(3, 6, 14, 0.28)";
+    ctx2d.fillRect(0, 0, w, h);
+
+    ctx2d.save();
+    ctx2d.translate(cx, cy);
+
+    var tpl = ENIGMA.template;
+
+    if(tpl === "hawk_eye_droste"){
+      // INFINITE RECURSIVE HAWK-EYE DROSTE ZOOM:
+      // Each octave scales by RATIO = 8.2 (the ratio between full Hawk radius ~190 and Pupil portal radius ~23).
+      // As zoomPhase goes 0 -> 1, the inner Hawk inside the pupil grows to become the outer Hawk seamlessly!
+      var RATIO = 8.2;
+      var zoomPhase = (t * ENIGMA.zoomSpeed * 0.55) % 1.0;
+      var cycleIndex = Math.floor(t * ENIGMA.zoomSpeed * 0.55);
+      var depth = ENIGMA.fractalDepth;
+
+      // Draw from outermost Hawk down to the deepest Hawk inside the pupil!
+      for(var lvl = -1; lvl < depth; lvl++){
+        var exp = (lvl - zoomPhase);
+        var scale = Math.pow(RATIO, -exp);
+        if(scale < 0.008 || scale > 28) continue;
+
+        ctx2d.save();
+        var twistRad = (exp * ENIGMA.spiralTwistDeg * Math.PI) / 180;
+        ctx2d.rotate(twistRad);
+        ctx2d.scale(scale, scale);
+
+        var colIdx = ((cycleIndex + lvl + Math.floor(t * ENIGMA.colorSpeed * 2)) % pal.length + pal.length) % pal.length;
+        drawSingleChromaticHawkLayer(ctx2d, pal, colIdx, t, bass, mid, high);
+        ctx2d.restore();
+      }
+    } else if(tpl === "chromatic_wings"){
+      // Cyber-Raptor Wingspan with 20-Key HawkChroma Feather Bars
+      for(var side = -1; side <= 1; side += 2){
+        for(var k = 0; k < 20; k++){
+          var val = ENIGMA.bins[k] || 0.3;
+          var ang = side * (0.18 + k * 0.068) + Math.sin(t * 2 + k * 0.2) * 0.04;
+          var len = 90 + val * 260 * (0.7 + bass * 0.4);
+          ctx2d.save();
+          ctx2d.rotate(ang);
+          ctx2d.fillStyle = CHROMA_20_PALETTE[k % 20];
+          ctx2d.beginPath();
+          ctx2d.roundRect(-8, -len, 16, len - 55, 6);
+          ctx2d.fill();
+          ctx2d.restore();
+        }
+      }
+      drawSingleChromaticHawkLayer(ctx2d, pal, Math.floor(t * 2), t, bass, mid, high);
+    } else if(tpl === "hawk_mandala"){
+      // 8-Fold Dual-Iris Kaleidoscope Hawk Mandala
+      var folds = 8;
+      for(var f = 0; f < folds; f++){
+        ctx2d.save();
+        ctx2d.rotate((f / folds) * Math.PI * 2 + t * 0.25);
+        ctx2d.scale(0.65 + bass * 0.25, 0.65 + bass * 0.25);
+        drawSingleChromaticHawkLayer(ctx2d, pal, f, t, bass, mid, high);
+        ctx2d.restore();
+      }
+    } else if(tpl === "keycap_tunnel"){
+      // 3D Isometric 2x10 HawkChroma Keycap Warp Tunnel
+      for(var ring = 8; ring >= 1; ring--){
+        var zFrac = ((ring - (t * ENIGMA.zoomSpeed * 1.8) % 1) / 8);
+        var rad = zFrac * Math.min(w, h) * 0.62;
+        for(var kc = 0; kc < 20; kc++){
+          var ka = (kc / 20) * Math.PI * 2 + zFrac * 0.5;
+          var kx = Math.cos(ka) * rad, ky = Math.sin(ka) * rad;
+          var kw = Math.max(6, zFrac * 44);
+          ctx2d.fillStyle = "#0F172A";
+          ctx2d.strokeStyle = CHROMA_20_PALETTE[kc];
+          ctx2d.lineWidth = 2.2;
+          ctx2d.beginPath();
+          ctx2d.roundRect(kx - kw/2, ky - kw/2, kw, kw, 5);
+          ctx2d.fill(); ctx2d.stroke();
+        }
+      }
+    } else if(tpl === "sacred_lissajous"){
+      // Laser Oscilloscope Lissajous & Sacred Geometry
+      ctx2d.strokeStyle = pal[0];
+      ctx2d.lineWidth = 2.8;
+      ctx2d.beginPath();
+      for(var s = 0; s <= 400; s++){
+        var p = (s / 400) * Math.PI * 2;
+        var R = 220 + (ENIGMA.bins[s % 32] || 0.3) * 90;
+        var lx = Math.sin(p * 3 + t * 1.4) * R;
+        var ly = Math.sin(p * 4 + t * 1.1) * R * 0.78;
+        if(s === 0) ctx2d.moveTo(lx, ly); else ctx2d.lineTo(lx, ly);
+      }
+      ctx2d.stroke();
+    } else if(tpl === "outrun_horizon"){
+      // Synthwave Outrun Horizon Grid + Soaring Chromatic Hawk
+      var sunY = -70;
+      var sunG = ctx2d.createLinearGradient(0, sunY - 120, 0, sunY + 120);
+      sunG.addColorStop(0, "#FACC15");
+      sunG.addColorStop(1, "#FF007F");
+      ctx2d.fillStyle = sunG;
+      ctx2d.beginPath(); ctx2d.arc(0, sunY, 120 + bass * 25, 0, Math.PI * 2); ctx2d.fill();
+
+      // Perspective Grid
+      ctx2d.strokeStyle = "#00F5D4";
+      ctx2d.lineWidth = 1.6;
+      for(var gx = -12; gx <= 12; gx++){
+        ctx2d.beginPath();
+        ctx2d.moveTo(gx * 25, 40);
+        ctx2d.lineTo(gx * 160, h / 2);
+        ctx2d.stroke();
+      }
+      for(var gz = 0; gz < 10; gz++){
+        var gy = 40 + Math.pow(((gz + (t * 2) % 1) / 10), 1.8) * (h / 2 - 40);
+        ctx2d.beginPath(); ctx2d.moveTo(-w/2, gy); ctx2d.lineTo(w/2, gy); ctx2d.stroke();
+      }
+      ctx2d.save();
+      ctx2d.translate(0, -65);
+      ctx2d.scale(0.55, 0.55);
+      drawSingleChromaticHawkLayer(ctx2d, pal, 0, t, bass, mid, high);
+      ctx2d.restore();
+    } else {
+      // Default Universal Chromatic Spectrum + Hawk Eye Core for remaining templates in 2D
+      for(var b = 0; b < 48; b++){
+        var a = (b / 48) * Math.PI * 2 + t * 0.4;
+        var v = ENIGMA.bins[b % 48] || 0.35;
+        var r1 = 110 + Math.sin(b * 0.5 + t * 3) * 20;
+        var r2 = r1 + v * 195 * bass;
+        ctx2d.strokeStyle = pal[b % pal.length];
+        ctx2d.lineWidth = 5;
+        ctx2d.beginPath();
+        ctx2d.moveTo(Math.cos(a) * r1, Math.sin(a) * r1);
+        ctx2d.lineTo(Math.cos(a) * r2, Math.sin(a) * r2);
+        ctx2d.stroke();
+      }
+      ctx2d.save();
+      ctx2d.scale(0.68 + bass * 0.18, 0.68 + bass * 0.18);
+      drawSingleChromaticHawkLayer(ctx2d, pal, Math.floor(t), t, bass, mid, high);
+      ctx2d.restore();
+    }
+
+    // Optional Outer 20-Key HawkChroma Ring
+    if(ENIGMA.showKeycapRing){
+      var ringR = Math.min(w, h) * 0.44;
+      for(var kIdx = 0; kIdx < 20; kIdx++){
+        var kAng = (kIdx / 20) * Math.PI * 2 - Math.PI / 2;
+        var kv = ENIGMA.bins[kIdx] || 0.3;
+        var rx = Math.cos(kAng) * ringR;
+        var ry = Math.sin(kAng) * ringR;
+        ctx2d.save();
+        ctx2d.translate(rx, ry);
+        ctx2d.rotate(kAng + Math.PI / 2);
+        ctx2d.fillStyle = CHROMA_20_PALETTE[kIdx];
+        ctx2d.globalAlpha = 0.45 + kv * 0.55;
+        ctx2d.beginPath();
+        ctx2d.roundRect(-14, -7 - kv * 18, 28, 14 + kv * 18, 4);
+        ctx2d.fill();
+        ctx2d.restore();
+      }
+    }
+
+    ctx2d.restore();
+  }
+
+  // ==========================================================================
+  // FORMAT 2: THREE.JS WEBGL 3D LAYER (3D RECURSIVE HAWK-EYE TUNNEL & FERROFLUID)
+  // ==========================================================================
+  var cvThree = document.getElementById("webglThreeLayer");
+  var threeRenderer = null, threeScene = null, threeCam = null, threeRings = [], threeCore = null;
+
+  function initThreeJsLayer(){
+    if(threeRenderer || typeof THREE === "undefined") return;
+    try {
+      threeScene = new THREE.Scene();
+      threeCam = new THREE.PerspectiveCamera(55, 16/9, 0.1, 200);
+      threeCam.position.set(0, 0, 8);
+      threeRenderer = new THREE.WebGLRenderer({ canvas: cvThree, antialias: true });
+      threeRenderer.setSize(cvThree.width, cvThree.height, false);
+
+      var amb = new THREE.AmbientLight(0x475569, 1.2);
+      threeScene.add(amb);
+      var pt = new THREE.PointLight(0x00F5D4, 2.5, 40);
+      pt.position.set(4, 4, 6);
+      threeScene.add(pt);
+
+      // Build 18 Nested 3D Hawk-Eye Torus & Octahedron Rings for Infinite 3D Tunnel Zoom
+      for(var i = 0; i < 18; i++){
+        var g = new THREE.TorusGeometry(1.6, 0.06, 16, 48);
+        var m = new THREE.MeshStandardMaterial({
+          color: new THREE.Color(CHROMA_20_PALETTE[i % 20]),
+          emissive: new THREE.Color(CHROMA_20_PALETTE[(i + 5) % 20]),
+          emissiveIntensity: 0.45,
+          metalness: 0.7,
+          roughness: 0.2
+        });
+        var mesh = new THREE.Mesh(g, m);
+        mesh.position.z = -i * 2.2;
+        threeScene.add(mesh);
+        threeRings.push(mesh);
+      }
+
+      var coreGeo = new THREE.IcosahedronGeometry(1.05, 3);
+      var coreMat = new THREE.MeshStandardMaterial({ color: 0xD4AF37, wireframe: true, emissive: 0x059669 });
+      threeCore = new THREE.Mesh(coreGeo, coreMat);
+      threeScene.add(threeCore);
+    } catch(e){}
+  }
+
+  function renderThreeJsLayer(t){
+    initThreeJsLayer();
+    if(!threeRenderer) return;
+    var pal = getActivePalette();
+    threeRings.forEach(function(rMesh, idx){
+      var z = ((idx * 2.2 - t * ENIGMA.zoomSpeed * 9.0) % 39.6 + 39.6) % 39.6;
+      rMesh.position.z = 6.5 - z;
+      rMesh.rotation.z = t * 0.6 + idx * 0.25;
+      var s = 0.7 + (ENIGMA.bins[idx % 32] || 0.3) * ENIGMA.bass;
+      rMesh.scale.set(s, s, 1);
+      rMesh.material.color.set(pal[idx % pal.length]);
+    });
+    if(threeCore){
+      threeCore.rotation.x = t * 0.9;
+      threeCore.rotation.y = t * 1.3;
+      var cs = 0.65 + ENIGMA.bass * 0.75;
+      threeCore.scale.set(cs, cs, cs);
+    }
+    threeRenderer.render(threeScene, threeCam);
+  }
+
+  // ==========================================================================
+  // FORMAT 3: RAW WEBGL GLSL FRAGMENT SHADER LAYER (GPU DROSTE HAWK-EYE SHADER)
+  // ==========================================================================
+  var cvGlsl = document.getElementById("glslShaderLayer");
+  var gl = null, glProg = null, uTimeLoc = null, uBassLoc = null, uZoomLoc = null, uResLoc = null;
+
+  function initGlslLayer(){
+    if(gl) return;
+    try {
+      gl = cvGlsl.getContext("webgl");
+      if(!gl) return;
+      var vsSrc = "attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }";
+      var fsSrc = [
+        "precision highp float;",
+        "uniform vec2 uRes;",
+        "uniform float uTime;",
+        "uniform float uBass;",
+        "uniform float uZoom;",
+        "void main(){",
+        "  vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / min(uRes.x, uRes.y);",
+        "  float r = length(uv) + 0.0001;",
+        "  float a = atan(uv.y, uv.x);",
+        "  // Logarithmic Droste Hawk-Eye Spiral Transform",
+        "  float logR = log2(r) - uTime * uZoom * 2.4;",
+        "  float octave = fract(logR);",
+        "  float feather = sin(a * 12.0 + logR * 4.0 + uTime * 2.0);",
+        "  float iris = smoothstep(0.75, 0.15, abs(octave - 0.5)) * (0.6 + 0.4 * feather);",
+        "  vec3 col1 = vec3(0.83, 0.68, 0.21);",
+        "  vec3 col2 = vec3(0.0, 0.96, 0.83);",
+        "  vec3 col3 = vec3(0.95, 0.24, 0.36);",
+        "  vec3 col = mix(col1, col2, 0.5 + 0.5 * sin(logR * 3.14159 + uTime));",
+        "  col = mix(col, col3, pow(iris, 2.0) * uBass);",
+        "  gl_FragColor = vec4(col * (0.35 + 0.95 * iris), 1.0);",
+        "}"
+      ].join("\n");
+
+      function compile(type, src){
+        var s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        return s;
+      }
+      glProg = gl.createProgram();
+      gl.attachShader(glProg, compile(gl.VERTEX_SHADER, vsSrc));
+      gl.attachShader(glProg, compile(gl.FRAGMENT_SHADER, fsSrc));
+      gl.linkProgram(glProg);
+      gl.useProgram(glProg);
+
+      var buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+      var pLoc = gl.getAttribLocation(glProg, "p");
+      gl.enableVertexAttribArray(pLoc);
+      gl.vertexAttribPointer(pLoc, 2, gl.FLOAT, false, 0, 0);
+
+      uResLoc  = gl.getUniformLocation(glProg, "uRes");
+      uTimeLoc = gl.getUniformLocation(glProg, "uTime");
+      uBassLoc = gl.getUniformLocation(glProg, "uBass");
+      uZoomLoc = gl.getUniformLocation(glProg, "uZoom");
+    } catch(e){}
+  }
+
+  function renderGlslLayer(t){
+    initGlslLayer();
+    if(!gl || !glProg) return;
+    gl.viewport(0, 0, cvGlsl.width, cvGlsl.height);
+    gl.uniform2f(uResLoc, cvGlsl.width, cvGlsl.height);
+    gl.uniform1f(uTimeLoc, t);
+    gl.uniform1f(uBassLoc, ENIGMA.bass);
+    gl.uniform1f(uZoomLoc, ENIGMA.zoomSpeed);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+
+  // ==========================================================================
+  // FORMAT 4: SCALABLE VECTOR GRAPHICS (<SVG>) DOM VISUALIZER LAYER
+  // ==========================================================================
+  var svgEl = document.getElementById("svgDomLayer");
+  function renderSvgDomLayer(t){
+    var pal = getActivePalette();
+    var zoomPhase = (t * ENIGMA.zoomSpeed * 0.55) % 1.0;
+    var depth = ENIGMA.fractalDepth;
+    var parts = ['<rect width="1000" height="600" fill="#03060E"/>'];
+
+    for(var lvl = 0; lvl < depth; lvl++){
+      var exp = lvl - zoomPhase;
+      var sc = Math.pow(4.2, -exp) * 1.45;
+      if(sc < 0.04 || sc > 12) continue;
+      var rot = (exp * ENIGMA.spiralTwistDeg + t * 18).toFixed(1);
+      var col1 = pal[lvl % pal.length];
+      var col2 = pal[(lvl + 1) % pal.length];
+      var rIris = (75 + ENIGMA.bass * 25).toFixed(1);
+      parts.push(
+        '<g transform="translate(500,300) scale(' + sc.toFixed(3) + ') rotate(' + rot + ')">' +
+          '<polygon points="0,-175 130,-135 200,-35 140,75 0,175 -140,75 -200,-35 -130,-135" fill="#091020" stroke="' + col1 + '" stroke-width="5"/>' +
+          '<path d="M-140,-25 Q0,' + (-110 - ENIGMA.bass * 30).toFixed(0) + ' 140,-25 Q0,-60 -140,-25 Z" fill="' + col1 + '"/>' +
+          '<circle cx="0" cy="0" r="' + rIris + '" fill="none" stroke="' + col2 + '" stroke-width="8"/>' +
+          '<circle cx="0" cy="0" r="24" fill="#02040A" stroke="#FFFFFF" stroke-width="3"/>' +
+        '</g>'
+      );
+    }
+    svgEl.innerHTML = parts.join("");
+  }
+
+  // ==========================================================================
+  // FORMAT 5: PURE CSS3 3D HARDWARE TRANSFORMS LAYER
+  // ==========================================================================
+  var cssScene = document.getElementById("css3dSceneRoot");
+  function initCss3dDom(){
+    if(!cssScene || cssScene.children.length > 0) return;
+    for(var i = 0; i < 8; i++){
+      var d = document.createElement("div");
+      d.className = "css3d-ring";
+      d.innerHTML = '<span style="font:900 12px Orbitron,monospace;color:#FFF">🦅 HAWK-EYE LVL ' + (i+1) + '</span>';
+      cssScene.appendChild(d);
+    }
+  }
+  function renderCss3dLayer(t){
+    initCss3dDom();
+    var pal = getActivePalette();
+    var rings = cssScene.children;
+    for(var i = 0; i < rings.length; i++){
+      var zPhase = ((i - t * ENIGMA.zoomSpeed * 1.5) % rings.length + rings.length) % rings.length;
+      var sc = Math.pow(1.45, zPhase - 3) * (0.8 + ENIGMA.bass * 0.35);
+      var rz = (t * 35 + i * 22) % 360;
+      var rx = Math.sin(t * 2 + i) * 28;
+      rings[i].style.borderColor = pal[i % pal.length];
+      rings[i].style.transform = "scale3d(" + sc.toFixed(3) + "," + sc.toFixed(3) + ",1) rotateX(" + rx.toFixed(1) + "deg) rotateZ(" + rz.toFixed(1) + "deg)";
+      rings[i].style.opacity = Math.max(0.1, Math.min(1, 1 - Math.abs(zPhase - 4) / 4.5)).toFixed(2);
+    }
+  }
+
+  // ==========================================================================
+  // FORMAT 6: ASCII / MATRIX CHARACTER ART LAYER
+  // ==========================================================================
+  var asciiEl = document.getElementById("asciiVizLayer");
+  var ASCII_CHARS = " .,:;+!=*?#%@🦅";
+  function renderAsciiLayer(t){
+    var cols = 92, rows = 36;
+    var out = "";
+    var zoom = t * ENIGMA.zoomSpeed * 2.2;
+    for(var r = 0; r < rows; r++){
+      var ny = (r - rows / 2) / (rows * 0.42);
+      for(var c = 0; c < cols; c++){
+        var nx = (c - cols / 2) / (cols * 0.24);
+        var dist = Math.hypot(nx, ny) + 0.001;
+        var ang = Math.atan2(ny, nx);
+        var logD = Math.log2(dist) - zoom;
+        var wave = Math.sin(logD * 4.5 + Math.sin(ang * 6.0 + t * 2.0)) * 0.5 + 0.5;
+        var val = Math.min(1, wave * (0.55 + ENIGMA.bass * 0.6));
+        var chIdx = Math.min(ASCII_CHARS.length - 2, Math.floor(val * (ASCII_CHARS.length - 1)));
+        out += ASCII_CHARS[chIdx];
+      }
+      out += "\n";
+    }
+    asciiEl.textContent = out;
+    asciiEl.style.color = getActivePalette()[0];
+  }
+
+  // ==========================================================================
+  // LIVE MULTI-FORMAT STANDALONE HTML CODE GENERATOR
+  // Generates a 100% self-contained, full-screen ready .HTML file for the
+  // user's selected HTML format & Hawk-Eye settings!
+  // ==========================================================================
+  function generateStandaloneHtmlCode(fmtOverride){
+    var fmt = fmtOverride || ENIGMA.format;
+    var pal = getActivePalette();
+    var cfgJson = JSON.stringify({
+      template: ENIGMA.template,
+      format: fmt,
+      zoomSpeed: ENIGMA.zoomSpeed,
+      fractalDepth: ENIGMA.fractalDepth,
+      bassReact: ENIGMA.bassReact,
+      rayCount: ENIGMA.rayCount,
+      spiralTwistDeg: ENIGMA.spiralTwistDeg,
+      palette: pal,
+      brandText: ENIGMA.brandText
+    });
+
+    return [
+      "<!DOCTYPE html>",
+      "<html lang=\"en\">",
+      "<head>",
+      "<meta charset=\"utf-8\">",
+      "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",
+      "<title>" + ENIGMA.brandText + " — Standalone Full-Screen Visualizer (" + fmt.toUpperCase() + ")</title>",
+      "<style>",
+      "  * { box-sizing: border-box; margin: 0; padding: 0; }",
+      "  body { background: #02040A; color: #F8FAFC; font-family: system-ui, monospace; overflow: hidden; width: 100vw; height: 100vh; }",
+      "  canvas, svg, pre { width: 100vw; height: 100vh; display: block; }",
+      "  pre { font: 800 10px/10px monospace; color: " + pal[0] + "; display: flex; align-items: center; justify-content: center; white-space: pre; }",
+      "  .hud { position: fixed; top: 14px; right: 14px; z-index: 20; display: flex; gap: 8px; background: rgba(5,9,18,0.78); padding: 8px 12px; border-radius: 10px; border: 1px solid " + pal[0] + "; }",
+      "  button { background: " + pal[0] + "; color: #050811; border: 0; padding: 6px 12px; border-radius: 7px; font-weight: 800; cursor: pointer; }",
+      "  .clock { position: fixed; bottom: 24px; left: 28px; font: 900 28px monospace; color: rgba(255,255,255,0.82); pointer-events: none; text-shadow: 0 4px 18px #000; }",
+      "</style>",
+      "</head>",
+      "<body>",
+      "<div class=\"hud\" id=\"topHud\">",
+      "  <button onclick=\"document.documentElement.requestFullscreen()\">⛶ Full Screen</button>",
+      "  <button onclick=\"startMic()\">🎙️ Sync Mic Audio</button>",
+      "  <button onclick=\"document.getElementById('topHud').style.display='none'\">✕ Hide HUD</button>",
+      "</div>",
+      "<div class=\"clock\" id=\"ssClock\">" + ENIGMA.brandText + "</div>",
+      "<canvas id=\"viz\"></canvas>",
+      "<script>",
+      "const CFG = " + cfgJson + ";",
+      "const cv = document.getElementById('viz'), ctx = cv.getContext('2d');",
+      "function resize(){ cv.width = innerWidth; cv.height = innerHeight; } addEventListener('resize', resize); resize();",
+      "let ac, an, fd; async function startMic(){ ac = new AudioContext(); const st = await navigator.mediaDevices.getUserMedia({audio:true}); an = ac.createAnalyser(); ac.createMediaStreamSource(st).connect(an); fd = new Uint8Array(an.frequencyBinCount); }",
+      "function drawHawk(c, pal, off, bass){",
+      "  c.strokeStyle = pal[off % pal.length]; c.fillStyle = '#070C18'; c.lineWidth = 4;",
+      "  c.beginPath(); c.moveTo(-190,-40); c.lineTo(0,-170-bass*25); c.lineTo(190,-40); c.lineTo(0,170+bass*20); c.closePath(); c.fill(); c.stroke();",
+      "  c.fillStyle = pal[(off+1)%pal.length]; c.beginPath(); c.arc(0,0,80+bass*15,0,6.283); c.fill();",
+      "  c.fillStyle = '#02040A'; c.beginPath(); c.arc(0,0,22,0,6.283); c.fill();",
+      "}",
+      "function loop(ms){",
+      "  requestAnimationFrame(loop); const t = ms * 0.001;",
+      "  let bass = 0.5 + 0.45 * Math.sin(t * 6.8);",
+      "  if(an){ an.getByteFrequencyData(fd); bass = (fd[1]+fd[2]+fd[3])/(3*255) * CFG.bassReact; }",
+      "  ctx.fillStyle = 'rgba(2,4,10,0.28)'; ctx.fillRect(0,0,cv.width,cv.height);",
+      "  ctx.save(); ctx.translate(cv.width/2, cv.height/2);",
+      "  const zp = (t * CFG.zoomSpeed * 0.55) % 1, cyc = Math.floor(t * CFG.zoomSpeed * 0.55);",
+      "  for(let l=-1; l<CFG.fractalDepth; l++){",
+      "    const exp = l - zp, sc = Math.pow(8.2, -exp);",
+      "    if(sc < 0.01 || sc > 25) continue;",
+      "    ctx.save(); ctx.rotate(exp * CFG.spiralTwistDeg * Math.PI / 180); ctx.scale(sc, sc);",
+      "    drawHawk(ctx, CFG.palette, cyc + l + 10, bass); ctx.restore();",
+      "  }",
+      "  ctx.restore();",
+      "} requestAnimationFrame(loop);",
+      "<\/script>",
+      "</body>",
+      "</html>"
+    ].join("\n");
+  }
+
+  function refreshLiveCodeBox(){
+    var box = document.getElementById("liveHtmlCodeBox");
+    if(box) box.value = generateStandaloneHtmlCode(ENIGMA.format);
+  }
+
+  // ==========================================================================
+  // MASTER ANIMATION LOOP & FORMAT ROUTER
+  // ==========================================================================
+  var startMs = performance.now();
+  function masterVizLoop(nowMs){
+    requestAnimationFrame(masterVizLoop);
+    var t = (nowMs - startMs) * 0.001;
+    updateAudioSpectrum(t);
+
+    if(ENIGMA.format === "canvas2d")      renderCanvas2D(t);
+    else if(ENIGMA.format === "threejs")  renderThreeJsLayer(t);
+    else if(ENIGMA.format === "glsl")     renderGlslLayer(t);
+    else if(ENIGMA.format === "svg")      renderSvgDomLayer(t);
+    else if(ENIGMA.format === "css3d")    renderCss3dLayer(t);
+    else if(ENIGMA.format === "ascii")    renderAsciiLayer(t);
+  }
+
+  // ==========================================================================
+  // WIRE UI CONTROLS, FORMAT SWITCHER, TEMPLATES & EXPORTERS
+  // ==========================================================================
+  function setHtmlFormat(fmtId){
+    ENIGMA.format = fmtId;
+    var layerMap = {
+      canvas2d: "canvas2dLayer",
+      threejs:  "webglThreeLayer",
+      glsl:     "glslShaderLayer",
+      svg:      "svgDomLayer",
+      css3d:    "css3dVizLayer",
+      ascii:    "asciiVizLayer"
+    };
+    Object.keys(layerMap).forEach(function(k){
+      var el = document.getElementById(layerMap[k]);
+      if(el) el.hidden = (k !== fmtId);
+    });
+    document.querySelectorAll("#htmlFormatSeg button").forEach(function(b){
+      b.setAttribute("aria-pressed", b.dataset.fmt === fmtId);
+    });
+    var fmtNames = {
+      canvas2d: "HTML5 2D Canvas (<canvas>)",
+      threejs:  "Three.js 3D WebGL",
+      glsl:     "Raw WebGL GLSL Shader",
+      svg:      "SVG Vector DOM (<svg>)",
+      css3d:    "CSS3 3D Hardware DOM",
+      ascii:    "ASCII / Matrix Text Art"
+    };
+    document.getElementById("activeFmtBadge").textContent = "Format: " + (fmtNames[fmtId] || fmtId);
+    refreshLiveCodeBox();
+  }
+
+  document.querySelectorAll("#htmlFormatSeg button").forEach(function(btn){
+    btn.onclick = function(){ setHtmlFormat(btn.dataset.fmt); };
+  });
+
+  function setTemplate(tplId){
+    ENIGMA.template = tplId;
+    document.querySelectorAll("#templateCardsGrid .tpl-card").forEach(function(c){
+      var active = c.dataset.tpl === tplId;
+      c.setAttribute("aria-pressed", String(active));
+      if(active){
+        var titleSpan = c.querySelector("span");
+        if(titleSpan) document.getElementById("activeTplBadge").textContent = titleSpan.textContent;
+      }
+    });
+    refreshLiveCodeBox();
+  }
+
+  document.querySelectorAll("#templateCardsGrid .tpl-card").forEach(function(card){
+    card.onclick = function(){ setTemplate(card.dataset.tpl); };
+  });
+
+  // Built-In 130 BPM Electro-Hawk Synth Player
+  var riffNotes = [35, 35, 38, 35, 40, 40, 38, 42];
+  document.getElementById("playDemoSynthBtn").onclick = function(){
+    ENIGMA.demoSynthPlaying = !ENIGMA.demoSynthPlaying;
+    var btn = this;
+    if(ENIGMA.demoSynthPlaying){
+      ensureVizAudio();
+      btn.textContent = "⏹ Stop Electro-Hawk Synth";
+      btn.style.background = "#DC2626";
+      demoStep = 0;
+      triggerElectroHawkNote(35, 0.22, true);
+      demoTimer = setInterval(function(){
+        var m = riffNotes[demoStep % riffNotes.length];
+        triggerElectroHawkNote(m, 0.2, demoStep % 2 === 0);
+        demoStep++;
+      }, 230);
+    } else {
+      clearInterval(demoTimer);
+      btn.textContent = "▶ Play 130 BPM Electro-Hawk Synth";
+      btn.style.background = "#059669";
+    }
+  };
+
+  // Live Mic Input
+  document.getElementById("micInputVizBtn").onclick = async function(){
+    var btn = this;
+    try {
+      ensureVizAudio();
+      var stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      var src = audioCtx.createMediaStreamSource(stream);
+      src.connect(analyser);
+      ENIGMA.micActive = true;
+      btn.textContent = "🎙️ Mic Active (Listening)";
+      btn.style.background = "#059669";
+    } catch(e){
+      btn.textContent = "⚠️ Mic Blocked — Using Auto-Pilot LFO";
+    }
+  };
+
+  // Audio File Upload
+  var upBtn = document.getElementById("uploadAudioVizBtn");
+  var fileIn = document.getElementById("vizAudioFileIn");
+  var audEl = document.getElementById("uploadedAudioEl");
+  var mediaElemConnected = false;
+  upBtn.onclick = function(){ fileIn.click(); };
+  fileIn.onchange = function(){
+    var f = fileIn.files && fileIn.files[0];
+    if(!f) return;
+    ensureVizAudio();
+    audEl.src = URL.createObjectURL(f);
+    audEl.hidden = false;
+    if(!mediaElemConnected){
+      var mSrc = audioCtx.createMediaElementSource(audEl);
+      mSrc.connect(analyser);
+      mediaElemConnected = true;
+    }
+    audEl.play();
+  };
+
+  document.getElementById("autoPilotLfoChk").onchange = function(){
+    ENIGMA.autoPilot = this.checked;
+  };
+
+  // Parameter Sliders
+  function wireSlider(id, lblId, prop, scale, suffix){
+    var el = document.getElementById(id);
+    var lbl = document.getElementById(lblId);
+    if(!el) return;
+    el.oninput = function(){
+      ENIGMA[prop] = (+this.value) * scale;
+      if(lbl) lbl.textContent = this.value + suffix;
+      refreshLiveCodeBox();
+    };
+  }
+  wireSlider("prmZoomSpeed", "lblZoomSpeed", "zoomSpeed", 0.01, "%");
+  wireSlider("prmFractalDepth", "lblFractalDepth", "fractalDepth", 1, " Hawks");
+  wireSlider("prmBassReact", "lblBassReact", "bassReact", 0.01, "%");
+  wireSlider("prmColorSpeed", "lblColorSpeed", "colorSpeed", 0.01, "%");
+  wireSlider("prmRayCount", "lblRayCount", "rayCount", 1, "");
+  wireSlider("prmSpiralTwist", "lblSpiralTwist", "spiralTwistDeg", 1, "°");
+
+  document.getElementById("prmPaletteSel").onchange = function(){
+    ENIGMA.paletteId = this.value;
+    refreshLiveCodeBox();
+  };
+  document.getElementById("prmBrandTextIn").oninput = function(){
+    ENIGMA.brandText = this.value;
+    document.getElementById("ssCustomBrandTxt").textContent = this.value;
+    refreshLiveCodeBox();
+  };
+  document.getElementById("chkMirrorKaleido").onchange = function(){ ENIGMA.mirrorKaleido = this.checked; };
+  document.getElementById("chkShowKeycapRing").onchange = function(){ ENIGMA.showKeycapRing = this.checked; };
+
+  // Screen Saver Clock HUD & Full-Screen Mode
+  var ssHud = document.getElementById("screensaverHudOverlay");
+  document.getElementById("toggleSsHudBtn").onclick = function(){
+    ssHud.hidden = !ssHud.hidden;
+  };
+  setInterval(function(){
+    var d = new Date();
+    var el = document.getElementById("ssClockTime");
+    if(el) el.textContent = d.toTimeString().split(" ")[0];
+  }, 1000);
+
+  document.getElementById("launchFullscreenVizBtn").onclick = function(){
+    var on = !document.body.classList.contains("enigma-fs");
+    document.body.classList.toggle("enigma-fs", on);
+    ssHud.hidden = !on;
+    this.textContent = on ? "✕ Exit Screen Saver" : "⛶ Full-Screen Screen Saver";
+  };
+
+  // Auto-Cycle Templates Timer
+  var cycleInterval = null;
+  var tplList = ["hawk_eye_droste","chromatic_wings","hawk_mandala","keycap_tunnel","ferro_sphere","plasma_nebula","sacred_lissajous","outrun_horizon","dna_fountain","starfield_warp"];
+  var tplCycleIdx = 0;
+  document.getElementById("autoCycleTplSel").onchange = function(){
+    clearInterval(cycleInterval);
+    var sec = +this.value;
+    if(sec > 0){
+      cycleInterval = setInterval(function(){
+        tplCycleIdx = (tplCycleIdx + 1) % tplList.length;
+        setTemplate(tplList[tplCycleIdx]);
+      }, sec * 1000);
+    }
+  };
+
+  // Broadcast Active Palette to HawkRGB & HawkShine
+  document.getElementById("beamVizToShineBtn").onclick = function(){
+    var pal = getActivePalette();
+    UI_STATE.activeColor = pal[0];
+    UI_STATE.activeLabel = "ENIGMA";
+    saveAndBroadcastUi(true);
+    this.textContent = "✅ Broadcasted " + pal[0] + " to Suite!";
+    var self = this;
+    setTimeout(function(){ self.textContent = "📡 Broadcast Colors to HawkRGB & HawkShine"; }, 1800);
+  };
+
+  // Export Standalone Full-Screen .HTML File
+  function downloadStandaloneHtml(){
+    var code = generateStandaloneHtmlCode(ENIGMA.format);
+    var blob = new Blob([code], { type: "text/html;charset=utf-8" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "HawkEnigma_" + ENIGMA.template + "_" + ENIGMA.format + "_Screensaver.html";
+    a.click();
+  }
+  document.getElementById("exportStandaloneHtmlBtn").onclick = downloadStandaloneHtml;
+  document.getElementById("downloadCurrentFmtHtmlBtn").onclick = downloadStandaloneHtml;
+
+  document.getElementById("copyHtmlCodeBtn").onclick = function(){
+    var box = document.getElementById("liveHtmlCodeBox");
+    box.select();
+    if(navigator.clipboard) navigator.clipboard.writeText(box.value);
+    var btn = this;
+    btn.textContent = "✅ Copied HTML!";
+    setTimeout(function(){ btn.textContent = "📋 Copy HTML Code"; }, 1500);
+  };
+
+  // Export All 6 HTML Formats inside a single .ZIP Archive (CRC32 + Store ZIP builder)
+  function crc32Bytes(u8){
+    var c = -1;
+    for(var i=0; i<u8.length; i++){
+      c = (c >>> 8) ^ (function(n){
+        for(var k=0; k<8; k++) n = (n & 1) ? (0xEDB88320 ^ (n >>> 1)) : (n >>> 1);
+        return n;
+      })((c ^ u8[i]) & 0xFF);
+    }
+    return (c ^ -1) >>> 0;
+  }
+
+  document.getElementById("exportAllFormatsZipBtn").onclick = function(){
+    var fmts = ["canvas2d","threejs","glsl","svg","css3d","ascii"];
+    var enc = new TextEncoder();
+    var files = fmts.map(function(f){
+      return {
+        name: "HawkEnigma_" + ENIGMA.template + "_" + f + ".html",
+        data: enc.encode(generateStandaloneHtmlCode(f))
+      };
+    });
+    // Build ZIP Blob
+    var parts = [], central = [], offset = 0;
+    files.forEach(function(f){
+      var nBytes = enc.encode(f.name);
+      var crc = crc32Bytes(f.data);
+      var lh = new Uint8Array(30 + nBytes.length);
+      var dv = new DataView(lh.buffer);
+      dv.setUint32(0, 0x04034b50, true); dv.setUint16(4, 20, true);
+      dv.setUint32(14, crc, true); dv.setUint32(18, f.data.length, true); dv.setUint32(22, f.data.length, true);
+      dv.setUint16(26, nBytes.length, true);
+      lh.set(nBytes, 30);
+      parts.push(lh, f.data);
+
+      var ch = new Uint8Array(46 + nBytes.length);
+      var cdv = new DataView(ch.buffer);
+      cdv.setUint32(0, 0x02014b50, true); cdv.setUint16(4, 20, true); cdv.setUint16(6, 20, true);
+      cdv.setUint32(16, crc, true); cdv.setUint32(20, f.data.length, true); cdv.setUint32(24, f.data.length, true);
+      cdv.setUint16(28, nBytes.length, true); cdv.setUint32(42, offset, true);
+      ch.set(nBytes, 46);
+      central.push(ch);
+      offset += lh.length + f.data.length;
+    });
+    var cdSize = central.reduce(function(s, a){ return s + a.length; }, 0);
+    var eocd = new Uint8Array(22);
+    var edv = new DataView(eocd.buffer);
+    edv.setUint32(0, 0x06054b50, true);
+    edv.setUint16(8, files.length, true); edv.setUint16(10, files.length, true);
+    edv.setUint32(12, cdSize, true); edv.setUint32(16, offset, true);
+    var blob = new Blob(parts.concat(central, [eocd]), { type: "application/zip" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "HawkEnigma_All_6_HTML_Formats_Screensavers.zip";
+    a.click();
+  };
+
+  initSharedCustomizerBar();
+  loadSharedUi();
+  refreshLiveCodeBox();
+  requestAnimationFrame(masterVizLoop);
+})();
+</script>
+</body>
+</html>
